@@ -25,7 +25,13 @@ hamburger.addEventListener('click', () => {
 
 // Close mobile menu when clicking a link
 links.forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
+        // Prevent closing if the dropdown button container was clicked
+        if (link.classList.contains('lang-dropdown-container') && !e.target.closest('.lang-dropdown-menu li')) {
+            link.classList.toggle('active');
+            return;
+        }
+
         if (navLinks.classList.contains('nav-active')) {
             navLinks.classList.remove('nav-active');
             hamburger.classList.remove('toggle');
@@ -33,31 +39,25 @@ links.forEach(link => {
     });
 });
 
-// Scroll Animation Observer
-const elementInView = (el, dividend = 1) => {
-    const elementTop = el.getBoundingClientRect().top;
-    return (elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend);
+// Scroll Animation Observer (Modern Intersection Observer)
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15
 };
 
-const displayScrollElement = (element) => {
-    element.classList.add('appear');
-};
-
-const handleScrollAnimation = () => {
-    scrollElements.forEach((el) => {
-        if (elementInView(el, 1.1)) {
-            displayScrollElement(el);
+const scrollObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('appear');
+            observer.unobserve(entry.target); // Anima solo una vez al hacer scroll hacia abajo
         }
-    })
+    });
+}, observerOptions);
+
+if (scrollElements && scrollElements.length > 0) {
+    scrollElements.forEach(el => scrollObserver.observe(el));
 }
-
-// Initial check for elements in view
-window.addEventListener('load', handleScrollAnimation);
-
-// Check elements on scroll
-window.addEventListener('scroll', () => {
-    handleScrollAnimation();
-});
 
 // Smooth Scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -197,3 +197,64 @@ if (track && slides.length > 0) {
         autoPlay = setInterval(goNext, 4000);
     });
 }
+
+// Cursos Filter & Accordion Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const accordion = document.querySelector('.cursos-accordion');
+    const cards = document.querySelectorAll('.accordion-item');
+
+    if (filterButtons.length > 0 && accordion && cards.length > 0) {
+        
+        // Add hover logic to change active state for the accordion
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Remove active class from all items
+                cards.forEach(c => c.classList.remove('active'));
+                // Add active to the hovered one
+                card.classList.add('active');
+            });
+        });
+
+        // Filter logic
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                // Fade out accordion
+                accordion.style.opacity = '0';
+
+                setTimeout(() => {
+                    // Si el filtro no es 'all', activar los márgenes laterales
+                    if (filterValue === 'all') {
+                        accordion.classList.remove('filtered-mode');
+                    } else {
+                        accordion.classList.add('filtered-mode');
+                    }
+
+                    cards.forEach(card => {
+                        const isMatch = filterValue === 'all' || card.classList.contains(filterValue);
+                        if (isMatch) {
+                            card.classList.remove('hidden-filter');
+                        } else {
+                            card.classList.add('hidden-filter');
+                        }
+                    });
+
+                    // Automatically make the first visible element active so the accordion doesn't look empty
+                    cards.forEach(c => c.classList.remove('active'));
+                    const firstVisible = Array.from(cards).find(c => !c.classList.contains('hidden-filter'));
+                    if (firstVisible) firstVisible.classList.add('active');
+
+                    // Fade back in
+                    accordion.style.opacity = '1';
+                }, 500);
+            });
+        });
+    }
+});

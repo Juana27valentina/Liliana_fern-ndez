@@ -11,6 +11,11 @@
     <meta property="og:url" content="https://lili-makeup.com">
     <meta name="theme-color" content="#d4a373">
     <!-- Fonts -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="assets/logo_lili.png" as="image">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://translate.google.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -73,6 +78,7 @@
         const Navbar = () => {
             const [scrolled, setScrolled] = useState(false);
             const [mobileOpen, setMobileOpen] = useState(false);
+            const [langOpen, setLangOpen] = useState(false);
 
             useEffect(() => {
                 const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -89,10 +95,10 @@
             ];
 
             return (
-                <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'glass py-3' : 'bg-transparent py-6'}`}>
+                <nav id="navbar" className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'scrolled glass py-3' : 'bg-transparent py-6'}`}>
                     <div className="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center">
-                        <a href="index.html" className="flex items-center">
-                            <img src="assets/logo_lili.png" alt="Lili Logo" className={`transition-all duration-500 ${scrolled ? 'h-10' : 'h-14'} ${scrolled ? 'brightness-0' : 'brightness-0 invert'}`} />
+                        <a href="index.html" className="flex items-center logo">
+                            <img src="assets/logo_lili.png" alt="Lili Logo" className={`transition-all duration-500 ${scrolled ? 'h-10' : 'h-14'} ${(scrolled || mobileOpen) ? 'brightness-0' : 'brightness-0 invert'}`} />
                         </a>
 
                         {/* Desktop Nav */}
@@ -107,60 +113,81 @@
                                     </li>
                                 ))}
                             </ul>
-                            <a href="index.html#contact" className="btn-nav">
-                                Reservar Cita
+                             <a href="reserva.html" className="btn-nav">
+                                Reservar
                             </a>
                             <div className="lang-dropdown-container">
                                 <button className="lang-dropdown-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                                     <span>Idioma</span>
-                                    <svg className="chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    <svg className="chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                 </button>
                                 <ul className="lang-dropdown-menu">
-                                    <li onClick={() => window.changeLang && window.changeLang('es')}><span style={{fontSize: '1.2rem'}}>🇪🇸</span> Español</li>
-                                    <li onClick={() => window.changeLang && window.changeLang('en')}><span style={{fontSize: '1.2rem'}}>🇺🇸</span> English</li>
+                                    <li onClick={() => window.changeLang && window.changeLang('es')}><span className="flag-icon">🇪🇸</span> Español</li>
+                                    <li onClick={() => window.changeLang && window.changeLang('en')}><span className="flag-icon">🇺🇸</span> English</li>
                                 </ul>
                             </div>
                         </div>
 
                         {/* Mobile Toggle */}
-                        <button className={`md:hidden focus:outline-none ${scrolled ? 'text-nude-900' : 'text-white'}`} onClick={() => setMobileOpen(!mobileOpen)}>
-                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                {mobileOpen ? (
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                ) : (
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                                )}
-                            </svg>
-                        </button>
+                        <div className={`hamburger md:hidden ${mobileOpen ? 'toggle' : ''}`} onClick={() => setMobileOpen(!mobileOpen)}>
+                            <div className="line1" style={{ backgroundColor: (scrolled || mobileOpen) ? 'var(--dark)' : '#ffffff' }}></div>
+                            <div className="line2" style={{ backgroundColor: (scrolled || mobileOpen) ? 'var(--dark)' : '#ffffff' }}></div>
+                            <div className="line3" style={{ backgroundColor: (scrolled || mobileOpen) ? 'var(--dark)' : '#ffffff' }}></div>
+                        </div>
                     </div>
 
                     {/* Mobile Menu */}
                     <AnimatePresence>
                         {mobileOpen && (
                             <motion.div 
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                className="absolute top-full left-0 w-full glass border-t border-white/20 md:hidden"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="fixed inset-0 w-full h-screen bg-white md:hidden z-40 flex flex-col justify-center items-center"
                             >
-                                <ul className="flex flex-col items-center py-6 space-y-4 font-poppins text-sm tracking-widest uppercase text-nude-900">
-                                    {navLinks.map((link) => (
-                                        <li key={link.name}>
-                                            <a href={link.url} className="hover:text-gold transition duration-300" onClick={() => setMobileOpen(false)}>
+                                <ul className="flex flex-col items-center space-y-[1.8rem] font-poppins text-sm tracking-[2px] uppercase text-nude-900 w-full px-8">
+                                    {navLinks.map((link, i) => (
+                                        <motion.li 
+                                            key={link.name}
+                                            initial={{ opacity: 0, y: 15 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: i * 0.08, type: "spring", stiffness: 120 }}
+                                        >
+                                            <a href={link.url} className="hover:text-gold transition duration-300 text-[0.8rem] tracking-[2px] font-medium text-[var(--dark)]" onClick={() => setMobileOpen(false)}>
                                                 {link.name}
                                             </a>
-                                        </li>
+                                        </motion.li>
                                     ))}
-                                    <li>
-                                        <a href="reservar.html" className="btn-nav inline-block mt-4" onClick={() => setMobileOpen(false)}>
-                                            Reservar Cita
+                                    <motion.li
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: navLinks.length * 0.08, type: "spring", stiffness: 120 }}
+                                        className="w-full text-center"
+                                    >
+                                        <a href="reserva.html" className="btn-nav inline-block mt-2 text-[0.75rem] px-8 py-3 tracking-[1px]" onClick={() => setMobileOpen(false)}>
+                                            Reservar
                                         </a>
-                                    </li>
-                                    <li className="pt-4 border-t border-nude-200/50 w-3/4 text-center mt-6 flex justify-center items-center gap-6 pb-2">
-                                        <button onClick={() => {window.changeLang && window.changeLang('es'); setMobileOpen(false);}} className="font-poppins flex items-center gap-2 text-sm font-medium text-nude-900 hover:text-gold"><span style={{fontSize: '1.2rem'}}>🇪🇸</span> Español</button>
-                                        <button onClick={() => {window.changeLang && window.changeLang('en'); setMobileOpen(false);}} className="font-poppins flex items-center gap-2 text-sm font-medium text-nude-900 hover:text-gold"><span style={{fontSize: '1.2rem'}}>🇺🇸</span> English</button>
-                                    </li>
+                                    </motion.li>
+                                    <motion.li 
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: (navLinks.length + 1) * 0.08, type: "spring", stiffness: 120 }}
+                                        className="pt-6 border-t border-nude-200/50 w-3/4 text-center mt-2 flex justify-center items-center pb-2"
+                                    >
+                                        <div className={`lang-dropdown-container ${langOpen ? 'active' : ''}`} onClick={() => setLangOpen(!langOpen)}>
+                                            <button className="lang-dropdown-btn text-nude-900 border-nude-900 mx-auto group">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                                <span>Idioma</span>
+                                                <svg className="chevron group-hover:text-gold" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </button>
+                                            <ul className="lang-dropdown-menu">
+                                                <li onClick={(e) => {e.stopPropagation(); window.changeLang && window.changeLang('es'); setMobileOpen(false);}}><span className="flag-icon">🇪🇸</span> Español</li>
+                                                <li onClick={(e) => {e.stopPropagation(); window.changeLang && window.changeLang('en'); setMobileOpen(false);}}><span className="flag-icon">🇺🇸</span> English</li>
+                                            </ul>
+                                        </div>
+                                    </motion.li>
                                 </ul>
                             </motion.div>
                         )}
@@ -389,7 +416,7 @@
 
         const Footer = () => {
             return (
-                <footer className="site-footer">
+                <footer className="site-footer bg-white">
                     <div className="container">
                         <div className="footer-top">
                             <a href="#" className="back-to-top" onClick={(e) => {e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'});}}>VOLVER ARRIBA &nbsp; <span>↑</span></a>
@@ -628,8 +655,11 @@
             useEffect(() => {
                 const params = new URLSearchParams(window.location.search);
                 const type = params.get('type');
-                if (type && PAGE_DATA[type]) {
-                    setData(PAGE_DATA[type]);
+                if (type) {
+                    const normalizedType = type.toLowerCase().trim();
+                    if (PAGE_DATA[normalizedType]) {
+                        setData(PAGE_DATA[normalizedType]);
+                    }
                 }
             }, []);
 
@@ -684,6 +714,6 @@
             }
         }
     </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
 </body>
 </html>

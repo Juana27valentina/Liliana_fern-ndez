@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atelier | Liliana Fernández</title>
+    <meta name="description" content="Experiencias bridal diseñadas para novias que desean vivir su gran día con armonía, sofisticación y acompañamiento personalizado.">
+    <meta property="og:title" content="Atelier | Liliana Fernández">
+    <meta property="og:description" content="Descubre nuestras exclusivas experiencias y servicios de maquillaje diseñados a tu medida.">
+    <meta property="og:image" content="assets/lili.jpg">
+    <meta property="og:url" content="https://lili-makeup.com">
+    <meta name="theme-color" content="#d4a373">
+    <!-- Fonts -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="assets/logo_lili.png" as="image">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://translate.google.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nude: {
+                            50: '#FAF7F5',
+                            100: '#F5EBE6',
+                            200: '#EBD6CC',
+                            300: '#E0C2B2',
+                            400: '#D6AD99',
+                            500: '#CC9980',
+                            600: '#B88A73',
+                            700: '#997360',
+                            800: '#7A5C4D',
+                            900: '#5C453A',
+                        },
+                        champagne: '#F7E7CE',
+                        ivory: '#FFFFF0',
+                        gold: {
+                            light: '#F3E5AB',
+                            DEFAULT: '#D4AF37',
+                            dark: '#AA8C2C',
+                        }
+                    },
+                    fontFamily: {
+                        playfair: ['"Playfair Display"', 'serif'],
+                        poppins: ['"Poppins"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Framer Motion -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: inline-flex;
+            white-space: nowrap;
+            animation: marquee 30s linear infinite;
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="atelier-page bg-nude-50 text-nude-900 overflow-x-hidden">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { motion, AnimatePresence } = window.Motion;
+
+        const MarqueeTicker = () => {
+            return (
+                <div className="bg-[#3d2b1f] border-t border-b border-gold/30 py-3.5 overflow-hidden relative select-none w-full z-20 mt-16 sm:mt-20">
+                    <div className="flex whitespace-nowrap gap-8 animate-marquee font-playfair uppercase text-[10px] md:text-xs text-white/90 tracking-[0.25em] font-medium">
+                        <span>LILIANA FERNÁNDEZ // IMAGEN & BELLEZA // BRIDAL EXPERIENCE // MASTERCLASS PONTEGUAPA // SKIN PERFECTING // SOPHISTICATED BEAUTY // LILIANA FERNÁNDEZ // IMAGEN & BELLEZA // BRIDAL EXPERIENCE // MASTERCLASS PONTEGUAPA // SKIN PERFECTING // SOPHISTICATED BEAUTY // LILIANA FERNÁNDEZ // IMAGEN & BELLEZA // BRIDAL EXPERIENCE // MASTERCLASS PONTEGUAPA // SKIN PERFECTING // SOPHISTICATED BEAUTY // LILIANA FERNÁNDEZ // IMAGEN & BELLEZA // BRIDAL EXPERIENCE // MASTERCLASS PONTEGUAPA // SKIN PERFECTING // SOPHISTICATED BEAUTY //</span>
+                    </div>
+                </div>
+            );
+        };
+
+        const QuoteBanner = ({ type }) => {
+            const quotes = {
+                bridal_curso: {
+                    text: `"La especialización en novias no es solo técnica; es la llave para conectar con el alma de cada novia y elevar tu negocio de belleza al nivel premium."`,
+                    author: "LILI FERNÁNDEZ"
+                },
+                glam_skin: {
+                    text: `"La piel es el lienzo definitivo. Dominar su preparación y acabado es la diferencia entre un maquillaje común y una obra de arte de alta costura."`,
+                    author: "LILI FERNÁNDEZ"
+                },
+                automaquillaje: {
+                    text: `"Cuando una mujer se siente bonita, coherente y segura con lo que proyecta, comienza a brillar con una luz imparable desde adentro hacia afuera."`,
+                    author: "LILI FERNÁNDEZ"
+                },
+                ponteguapa: {
+                    text: `"Cuando una mujer se siente bonita, coherente y segura con lo que proyecta, comienza a brillar con una luz imparable desde adentro hacia afuera."`,
+                    author: "LILI FERNÁNDEZ"
+                },
+                consultoria: {
+                    text: `"El estilo es tu carta de presentación silenciosa. Vestir con intención es alinear tu esencia personal con tus más altas ambiciones profesionales."`,
+                    author: "LILI FERNÁNDEZ"
+                }
+            };
+
+            const curQuote = quotes[type] || quotes.bridal_curso;
+
+            return (
+                <section className="py-20 bg-[#3d2b1f] text-white relative overflow-hidden text-center">
+                    <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+                    <div className="absolute top-6 left-6 right-6 bottom-6 border border-white/10 pointer-events-none rounded-2xl"></div>
+                    <div className="absolute top-10 left-10 right-10 bottom-10 border border-white/5 pointer-events-none rounded-xl"></div>
+                    
+                    <div className="max-w-4xl mx-auto px-6 relative z-10 flex flex-col items-center">
+                        <span className="text-gold text-[9px] tracking-[0.3em] font-semibold uppercase mb-6 inline-block font-poppins">
+                            Inspiración & Filosofía
+                        </span>
+                        <h3 className="font-playfair italic text-xl md:text-2xl lg:text-3xl leading-relaxed text-white/95 max-w-3xl mb-6">
+                            {curQuote.text}
+                        </h3>
+                        <div className="h-[1px] w-12 bg-gold/50 mb-4"></div>
+                        <span className="font-poppins text-[10px] tracking-[0.2em] font-bold text-gold uppercase">
+                            — {curQuote.author}
+                        </span>
+                    </div>
+                </section>
+            );
+        };
+
+        const EditorialSinglePackage = ({ title, subtitle, desc, price, includes, heroImage, titleTag }) => {
+            return (
+                <section className="py-20 md:py-28 px-6 bg-nude-50 relative overflow-hidden">
+                    <div className="absolute top-[-10%] left-[-10%] w-[35%] h-[35%] rounded-full bg-nude-200 blur-3xl opacity-40"></div>
+                    <div className="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] rounded-full bg-champagne blur-3xl opacity-40"></div>
+                    
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                            
+                            <div className="lg:col-span-5 relative group flex justify-center">
+                                <div className="absolute inset-0 border-[1.5px] border-gold rounded-3xl transform translate-x-4 translate-y-4 -z-10 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2"></div>
+                                <div className="absolute -top-3 -left-3 w-8 h-8 border-t-[2px] border-l-[2px] border-gold"></div>
+                                <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-[2px] border-r-[2px] border-gold"></div>
+                                
+                                <div className="w-full aspect-[4/5] max-w-[400px] rounded-3xl overflow-hidden shadow-2xl bg-nude-100 border border-white">
+                                    <img src={heroImage || 'assets/novios.jpeg'} alt={title} className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105" />
+                                </div>
+                            </div>
+
+                            <div className="lg:col-span-7 flex flex-col text-left">
+                                <span className="text-gold text-[9px] md:text-[10px] tracking-[0.3em] font-semibold uppercase mb-3 inline-block font-poppins">
+                                    {titleTag || "Taller de Perfeccionamiento"}
+                                </span>
+                                <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl text-nude-900 mb-2 uppercase tracking-wide leading-tight">
+                                    {title}
+                                </h2>
+                                <h3 className="font-playfair italic text-gold text-lg md:text-xl mb-6">
+                                    “ {subtitle} ”
+                                </h3>
+                                
+                                <div className="h-[1px] w-20 bg-gold mb-6"></div>
+                                
+                                <p className="font-poppins text-xs md:text-sm text-nude-800 font-light leading-relaxed mb-8 max-w-xl">
+                                    {desc}
+                                </p>
+
+                                <div className="mb-8">
+                                    <h4 className="font-poppins text-[10px] font-bold uppercase tracking-[0.2em] text-nude-900 mb-4 pb-2 border-b border-nude-200 w-max">
+                                        ✦ Contenidos Clave & Aprendizaje
+                                    </h4>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {includes.map((item, i) => (
+                                            <div key={i} className="flex items-start bg-white p-3.5 rounded-2xl shadow-sm hover:shadow-md border border-gold/10 hover:border-gold/30 transition-all duration-300">
+                                                <span className="text-gold mr-3 mt-0.5 text-xs">✦</span>
+                                                <div>
+                                                    <p className="font-poppins text-[12px] text-nude-900 font-medium leading-tight">{item.main}</p>
+                                                    {item.sub && <p className="font-poppins text-[10px] text-nude-600 mt-1 font-light leading-snug">{item.sub}</p>}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6 pt-6 border-t border-nude-200 mt-4">
+                                    <div>
+                                        <span className="block font-poppins text-[9px] font-semibold uppercase tracking-widest text-gold mb-1">Valor de la experiencia</span>
+                                        <span className="font-playfair text-2xl sm:text-3xl text-nude-900 font-medium">{price}</span>
+                                    </div>
+                                    <a 
+                                        href={`https://wa.me/573113178349?text=Hola,%20me%20interesa%20la%20experiencia%20${encodeURIComponent(title)}`} 
+                                        target="_blank" 
+                                        rel="noreferrer" 
+                                        className="py-4 px-8 text-center rounded-full uppercase text-[10px] md:text-xs tracking-[0.2em] font-bold bg-[#3d2b1f] hover:bg-[#251a13] text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 border border-transparent font-poppins"
+                                    >
+                                        Reservar Cupo
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Navbar = () => {
+            const [scrolled, setScrolled] = useState(false);
+            const [mobileOpen, setMobileOpen] = useState(false);
+            const [langOpen, setLangOpen] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const navLinks = [
+                { name: 'Inicio', url: 'index.html#hero' },
+                { name: 'Servicios', url: 'index.html#services' },
+                { name: 'Portafolio', url: 'index.html#portfolio' },
+                { name: 'Cursos', url: 'index.html#cursos' },
+                { name: 'Sobre Mí', url: 'index.html#about' },
+            ];
+
+            return (
+                <nav id="navbar" className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'scrolled glass py-3' : 'bg-transparent py-6'}`}>
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center">
+                        <a href="index.html" className="flex items-center logo">
+                            <img src="assets/logo_lili.png" alt="Lili Logo" className={`transition-all duration-500 ${scrolled ? 'h-10' : 'h-14'} ${(scrolled || mobileOpen) ? 'brightness-0' : 'brightness-0 invert'}`} />
+                        </a>
+
+                        {/* Desktop Nav */}
+                        <div className="hidden md:flex items-center space-x-8">
+                            <ul className={`flex space-x-8 font-poppins text-sm tracking-widest uppercase font-medium ${scrolled ? 'text-nude-900' : 'text-white drop-shadow-md'}`}>
+                                {navLinks.map((link) => (
+                                    <li key={link.name}>
+                                        <a href={link.url} className="hover:text-gold transition duration-300 relative group">
+                                            {link.name}
+                                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full"></span>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                            <a href="reserva.html" className="btn-nav">
+                                Reservar 
+                            </a>
+                            <div className="lang-dropdown-container">
+                                <button className="lang-dropdown-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                    <span>Idioma</span>
+                                    <svg className="chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                                <ul className="lang-dropdown-menu">
+                                    <li onClick={() => window.changeLang && window.changeLang('es')}><span className="flag-icon">🇪🇸</span> Español</li>
+                                    <li onClick={() => window.changeLang && window.changeLang('en')}><span className="flag-icon">🇺🇸</span> English</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* Mobile Toggle */}
+                        <div className={`hamburger md:hidden ${mobileOpen ? 'toggle' : ''}`} onClick={() => setMobileOpen(!mobileOpen)}>
+                            <div className="line1" style={{ backgroundColor: (scrolled || mobileOpen) ? 'var(--dark)' : '#ffffff' }}></div>
+                            <div className="line2" style={{ backgroundColor: (scrolled || mobileOpen) ? 'var(--dark)' : '#ffffff' }}></div>
+                            <div className="line3" style={{ backgroundColor: (scrolled || mobileOpen) ? 'var(--dark)' : '#ffffff' }}></div>
+                        </div>
+                    </div>
+
+                    {/* Mobile Menu */}
+                    <AnimatePresence>
+                        {mobileOpen && (
+                            <motion.div 
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="fixed inset-0 w-full h-screen bg-white md:hidden z-40 flex flex-col justify-center items-center"
+                            >
+                                <ul className="flex flex-col items-center space-y-[1.8rem] font-poppins text-sm tracking-[2px] uppercase text-nude-900 w-full px-8">
+                                    {navLinks.map((link, i) => (
+                                        <motion.li 
+                                            key={link.name}
+                                            initial={{ opacity: 0, y: 15 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: i * 0.08, type: "spring", stiffness: 120 }}
+                                        >
+                                            <a href={link.url} className="hover:text-gold transition duration-300 text-[0.8rem] tracking-[2px] font-medium text-[var(--dark)]" onClick={() => setMobileOpen(false)}>
+                                                {link.name}
+                                            </a>
+                                        </motion.li>
+                                    ))}
+                                    <motion.li
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: navLinks.length * 0.08, type: "spring", stiffness: 120 }}
+                                        className="w-full text-center"
+                                    >
+                                        <a href="reserva.html" className="btn-nav inline-block mt-2 text-[0.75rem] px-8 py-3 tracking-[1px]" onClick={() => setMobileOpen(false)}>
+                                            Reservar
+                                        </a>
+                                    </motion.li>
+                                    <motion.li 
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: (navLinks.length + 1) * 0.08, type: "spring", stiffness: 120 }}
+                                        className="pt-6 border-t border-nude-200/50 w-3/4 text-center mt-2 flex justify-center items-center pb-2"
+                                    >
+                                        <div className={`lang-dropdown-container ${langOpen ? 'active' : ''}`} onClick={() => setLangOpen(!langOpen)}>
+                                            <button className="lang-dropdown-btn text-nude-900 border-nude-900 mx-auto group">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                                <span>Idioma</span>
+                                                <svg className="chevron group-hover:text-gold" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </button>
+                                            <ul className="lang-dropdown-menu">
+                                                <li onClick={(e) => {e.stopPropagation(); window.changeLang && window.changeLang('es'); setMobileOpen(false);}}><span className="flag-icon">🇪🇸</span> Español</li>
+                                                <li onClick={(e) => {e.stopPropagation(); window.changeLang && window.changeLang('en'); setMobileOpen(false);}}><span className="flag-icon">🇺🇸</span> English</li>
+                                            </ul>
+                                        </div>
+                                    </motion.li>
+                                </ul>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </nav>
+            );
+        };
+
+        const Hero = ({ data }) => {
+            return (
+                <section className="relative h-screen flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 z-0 bg-nude-900">
+                        <img src={data.heroImage || "assets/novios.jpeg"} alt="Hero Background" className="w-full h-full object-cover object-center opacity-80" />
+                        <div className="absolute inset-0 bg-black/30"></div>
+                        <div className="absolute inset-0 bg-gradient-to-b from-nude-900/30 via-transparent to-nude-50"></div>
+                    </div>
+                    
+                    <div className="relative z-10 text-center px-4 max-w-4xl mx-auto mt-20">
+                        <motion.span 
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="block text-gold-light font-poppins text-sm md:text-base tracking-[0.3em] uppercase mb-4 shadow-black drop-shadow-md"
+                        >
+                            Exclusividad & Sofisticación
+                        </motion.span>
+                        <motion.h1 
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.4 }}
+                            className="font-playfair text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-white mb-6 drop-shadow-2xl"
+                        >
+                            {data.heroTitle}
+                        </motion.h1>
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1, delay: 0.6 }}
+                            className="h-px w-24 bg-gold mx-auto mb-6"
+                        ></motion.div>
+                        <motion.p 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1, delay: 0.8 }}
+                            className="font-playfair italic text-xl md:text-2xl text-white/95 drop-shadow-lg"
+                        >
+                            {data.heroSubtitle}
+                        </motion.p>
+                    </div>
+                    
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 1.5, repeat: Infinity, repeatType: "reverse" }}
+                        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center"
+                    >
+                        <span className="text-nude-900 text-xs font-poppins tracking-widest uppercase mb-2">Descubrir</span>
+                        <div className="w-[1px] h-12 bg-nude-900"></div>
+                    </motion.div>
+                </section>
+            );
+        };
+
+        const Intro = ({ data }) => {
+            return (
+                <section className="py-16 md:py-24 px-4 sm:px-6 md:px-8 relative bg-nude-50">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <motion.div 
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <h2 className="font-playfair text-3xl md:text-5xl text-nude-900 mb-2">{data.introTitle}</h2>
+                            <p className="font-poppins text-gold text-sm tracking-[0.2em] uppercase mb-10">By Liliana Fernández</p>
+                            
+                            <p className="font-poppins text-nude-800 text-lg md:text-xl leading-relaxed mb-6 font-light">
+                                {data.introDesc1}
+                            </p>
+                            <p className="font-poppins text-nude-700 leading-relaxed font-light">
+                                {data.introDesc2}
+                            </p>
+                            
+                            <div className="mt-12 flex justify-center">
+                                <svg width="120" height="20" viewBox="0 0 120 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="0" y1="10" x2="50" y2="10" stroke="#D4AF37" strokeWidth="0.5"/>
+                                    <circle cx="60" cy="10" r="3" fill="#D4AF37"/>
+                                    <line x1="70" y1="10" x2="120" y2="10" stroke="#D4AF37" strokeWidth="0.5"/>
+                                </svg>
+                            </div>
+                        </motion.div>
+                    </div>
+                </section>
+            );
+        };
+
+        const PackageCard = ({ title, subtitle, desc, price, includes, index, featured }) => {
+            return (
+                <motion.div 
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.8, delay: index * 0.2 }}
+                    className={`relative p-6 ${featured ? 'md:px-8 md:py-12 bg-white shadow-2xl scale-100 md:scale-105 z-10 border border-gold/10' : 'md:p-8 bg-white shadow-lg scale-100 md:scale-95 opacity-95'} rounded-2xl group hover:-translate-y-2 transition-transform duration-500 flex flex-col`}
+                >
+                    {/* Decorative corner borders */}
+                    <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-gold rounded-tl-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-gold rounded-tr-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-gold rounded-bl-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-gold rounded-br-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                    <div className="text-center mb-6">
+                        <h3 className="font-playfair text-xl md:text-2xl text-nude-900 mb-1 uppercase tracking-wider">{title}</h3>
+                        <h4 className="font-playfair italic text-gold text-lg mb-3">“ {subtitle} ”</h4>
+                        <p className="font-poppins text-sm text-nude-700 font-light leading-relaxed">{desc}</p>
+                    </div>
+
+                    <div className="mb-6 flex-grow">
+                        <h5 className="font-poppins text-[10px] uppercase tracking-[0.15em] text-nude-900 font-bold mb-4 text-center border-b border-nude-200 pb-2">Incluye</h5>
+                        <ul className="space-y-2.5 text-left">
+                            {includes.map((item, i) => (
+                                <li key={i} className="flex items-start">
+                                    <span className="text-gold mr-2.5 mt-0.5 flex-shrink-0 text-[9px]">✦</span>
+                                    <div>
+                                        <p className="font-poppins text-[12px] text-nude-900 font-medium leading-tight">{item.main}</p>
+                                        {item.sub && <p className="font-poppins text-[10px] text-nude-600 mt-0.5 font-light leading-snug">{item.sub}</p>}
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className="text-center mt-auto pt-6 border-t border-nude-100/50">
+                        <div className="mb-6">
+                            <span className="block font-poppins text-[10px] font-semibold uppercase tracking-widest text-gold mb-2">Valor de la experiencia</span>
+                            <span className="font-playfair text-2xl md:text-3xl text-nude-900 font-medium">{price}</span>
+                        </div>
+                        <a href={`https://wa.me/573113178349?text=Hola,%20me%20interesa%20la%20experiencia%20${encodeURIComponent(title)}`} target="_blank" rel="noreferrer" 
+                           className={`block w-full py-3.5 px-6 rounded-[30px] uppercase text-[11px] tracking-widest font-semibold transition-all duration-300 ${featured ? 'bg-[#D6AD99] text-white hover:bg-[#b88a73] shadow-md hover:shadow-lg' : 'bg-transparent text-nude-900 border-[1.5px] border-nude-900 hover:bg-nude-900 hover:text-white'}`} 
+                           style={{ fontFamily: 'var(--font-text)' }}>
+                            Reservar Experiencia
+                        </a>
+                    </div>
+                </motion.div>
+            );
+        };
+
+        const InteractiveSyllabus = ({ title, subtitle, desc, price, includes, centerImage }) => {
+            const half = Math.ceil(includes.length / 2);
+            const leftItems = includes.slice(0, half);
+            const rightItems = includes.slice(half);
+
+            return (
+                <div className="w-full flex flex-col items-center">
+                    <div className="text-center mb-10 lg:mb-16">
+                        <motion.h3 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="font-playfair text-3xl md:text-5xl text-nude-900 mb-2 uppercase tracking-wider"
+                        >{title}</motion.h3>
+                        <motion.h4 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="font-playfair italic text-gold text-xl mb-4"
+                        >“ {subtitle} ”</motion.h4>
+                        <motion.p 
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className="font-poppins text-base md:text-lg text-nude-700 font-light max-w-2xl mx-auto"
+                        >{desc}</motion.p>
+                    </div>
+
+                    <div className="relative w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-6">
+                        
+                        {/* Left column */}
+                        <div className="w-full lg:w-[35%] flex flex-col gap-4 md:gap-5 relative z-10">
+                            {leftItems.map((item, i) => (
+                                <SyllabusItem 
+                                    key={i} 
+                                    item={item} 
+                                    index={i} 
+                                    align="right" 
+                                    delay={i * 0.15}
+                                />
+                            ))}
+                        </div>
+
+                        {/* Center Image */}
+                        <div className="relative w-56 h-56 md:w-72 md:h-72 my-6 lg:my-0 flex-shrink-0 flex items-center justify-center">
+                            <motion.div 
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                                className="absolute inset-0 rounded-full border-[1px] border-dashed border-gold/60"
+                                style={{ margin: 'calc(-10px - 1vw)' }}
+                            ></motion.div>
+                            <motion.div 
+                                animate={{ rotate: -360 }}
+                                transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+                                className="absolute inset-0 rounded-full border-[1px] border-gold/30"
+                                style={{ margin: 'calc(-20px - 2vw)' }}
+                            ></motion.div>
+                            <motion.div 
+                                animate={{ scale: [1, 1.05, 1] }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute inset-0 rounded-full bg-gold/5 blur-2xl"
+                                style={{ margin: 'calc(-12px - 1.5vw)' }}
+                            ></motion.div>
+                            
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1, type: 'spring' }}
+                                className="w-full h-full rounded-full border-4 border-white shadow-2xl overflow-hidden relative z-10 bg-nude-100 flex items-center justify-center"
+                            >
+                                <img src={centerImage || 'assets/lili.jpg'} alt="Center" className="w-full h-full object-cover" />
+                            </motion.div>
+                        </div>
+
+                        {/* Right column */}
+                        <div className="w-full lg:w-[35%] flex flex-col gap-4 md:gap-5 relative z-10">
+                            {rightItems.map((item, i) => (
+                                <SyllabusItem 
+                                    key={i + half} 
+                                    item={item} 
+                                    index={i + half} 
+                                    align="left" 
+                                    delay={(i + half) * 0.15}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="mt-16 text-center bg-white p-8 rounded-3xl shadow-xl border border-gold/20 w-full max-w-md relative z-20"
+                    >
+                        <span className="block font-poppins text-xs font-semibold uppercase tracking-widest text-gold mb-3">Valor de la experiencia</span>
+                        <span className="block font-playfair text-4xl text-nude-900 font-medium mb-6">{price}</span>
+                        <a href={`https://wa.me/573113178349?text=Hola,%20me%20interesa%20la%20experiencia%20${encodeURIComponent(title)}`} target="_blank" rel="noreferrer" 
+                           className="inline-block w-full py-3 px-8 rounded-full uppercase text-sm tracking-widest font-semibold bg-[#D6AD99] text-white hover:bg-[#b88a73] shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                            Reservar Experiencia
+                        </a>
+                    </motion.div>
+                </div>
+            );
+        };
+
+        const SyllabusItem = ({ item, index, align, delay }) => {
+            const isLeftColumn = align === 'right'; 
+            const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+            return (
+                <motion.div
+                    initial={{ opacity: 0, x: isMobile ? 0 : (isLeftColumn ? -40 : 40), y: isMobile ? 25 : 0 }}
+                    whileInView={{ opacity: 1, x: 0, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.8, delay: delay, type: "spring" }}
+                    className={`relative z-10 w-full flex ${isLeftColumn ? 'justify-center lg:justify-end' : 'justify-center lg:justify-start'}`}
+                >
+                    <motion.div
+                        animate={{ y: [0, -6, 0] }}
+                        transition={{ duration: 3 + (index % 3), repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
+                        whileHover={{ scale: 1.03 }}
+                        className={`flex flex-col ${isLeftColumn ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'} items-center text-center bg-white/90 backdrop-blur-md p-4 md:p-5 rounded-2xl shadow-md border border-gold/10 hover:border-gold/40 transition-colors duration-300 w-full max-w-md`}
+                    >
+                        <div className={`flex items-center gap-3 mb-2 w-full ${isLeftColumn ? 'justify-center lg:justify-end' : 'justify-center lg:justify-start'}`}>
+                            {isLeftColumn && <h5 className="font-poppins text-xs md:text-sm text-nude-900 font-semibold hidden lg:block leading-tight">{item.main}</h5>}
+                            
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-nude-50 to-nude-200 flex items-center justify-center text-gold shadow-sm border border-white shrink-0 font-playfair text-lg italic font-semibold">
+                                {index + 1}
+                            </div>
+                            
+                            {!isLeftColumn && <h5 className="font-poppins text-xs md:text-sm text-nude-900 font-semibold hidden lg:block leading-tight">{item.main}</h5>}
+                        </div>
+                        
+                        <h5 className="font-poppins text-sm text-nude-900 font-semibold mb-1 lg:hidden">{item.main}</h5>
+                        
+                        {item.sub && <p className="font-poppins text-[11px] md:text-xs text-nude-600 font-light leading-snug">{item.sub}</p>}
+                    </motion.div>
+
+                    {/* Desktop Connectors (Lines pointing to center) */}
+                    {isLeftColumn ? (
+                        <div className="hidden lg:block absolute top-1/2 -right-6 w-6 h-[1px] bg-gold/40 -translate-y-1/2"></div>
+                    ) : (
+                        <div className="hidden lg:block absolute top-1/2 -left-6 w-6 h-[1px] bg-gold/40 -translate-y-1/2"></div>
+                    )}
+                </motion.div>
+            );
+        };
+
+        const BeautyMatcherQuiz = ({ onRecommend }) => {
+            const [currentStep, setCurrentStep] = useState(0);
+            const [answers, setAnswers] = useState([]);
+            const [result, setResult] = useState(null);
+            const [isCalculating, setIsCalculating] = useState(false);
+
+            const questions = [
+                {
+                    q: "¿Qué buscas lograr principalmente con esta experiencia?",
+                    options: [
+                        { text: "Aprender técnicas profesionales para maquillarme en el día a día.", val: "personalizado" },
+                        { text: "Celebrar un momento especial y aprender tips prácticos con mi grupo de amigas.", val: "grupal" },
+                        { text: "Una transformación profunda de mi imagen personal, estilo y automaquillaje 1 a 1.", val: "personalizado" },
+                        { text: "Un espacio interactivo y personalizado compartido con un grupo pequeño (2-3 personas).", val: "semi-personalizado" }
+                    ]
+                },
+                {
+                    q: "¿Qué tipo de interacción y acompañamiento prefieres?",
+                    options: [
+                        { text: "100% individual, enfocado únicamente en mis rasgos y objetivos.", val: "personalizado" },
+                        { text: "Grupal y participativo, ideal para integración, risas y aprendizaje colectivo.", val: "grupal" },
+                        { text: "Un equilibrio: acompañamiento personalizado pero en un grupo pequeño y cercano.", val: "semi-personalizado" }
+                    ]
+                },
+                {
+                    q: "¿Cuánto tiempo y profundidad deseas dedicarle?",
+                    options: [
+                        { text: "Una sola sesión intensiva y dinámica para aprender lo fundamental.", val: "grupal" },
+                        { text: "Un taller para practicar a mi propio ritmo con correcciones cercanas.", val: "semi-personalizado" },
+                        { text: "Un proceso integral y detallado con diagnóstico y guía de estilo completa.", val: "personalizado" }
+                    ]
+                }
+            ];
+
+            const handleAnswer = (val) => {
+                const nextAnswers = [...answers, val];
+                setAnswers(nextAnswers);
+                
+                if (currentStep < questions.length - 1) {
+                    setCurrentStep(currentStep + 1);
+                } else {
+                    setIsCalculating(true);
+                    setTimeout(() => {
+                        const counts = nextAnswers.reduce((acc, curr) => {
+                            acc[curr] = (acc[curr] || 0) + 1;
+                            return acc;
+                        }, {});
+                        
+                        let recommended = "personalizado";
+                        let max = 0;
+                        Object.keys(counts).forEach(key => {
+                            if (counts[key] > max) {
+                                max = counts[key];
+                                recommended = key;
+                            }
+                        });
+                        
+                        setResult(recommended);
+                        setIsCalculating(false);
+                    }, 1200);
+                }
+            };
+
+            const resetQuiz = () => {
+                setCurrentStep(0);
+                setAnswers([]);
+                setResult(null);
+            };
+
+            const getResultDetails = (res) => {
+                if (res === 'grupal') {
+                    return {
+                        title: "Ponteguapa Grupal",
+                        desc: "¡Ideal para ti! Esta modalidad es perfecta para compartir un momento divertido y experiencial junto a tus amigas, celebraciones o grupos corporativos.",
+                        index: 0
+                    };
+                } else if (res === 'semi-personalizado') {
+                    return {
+                        title: "Ponteguapa Semi-Personalizado",
+                        desc: "¡Tu opción perfecta! Disfruta de un acompañamiento cercano en un grupo pequeño para resolver todas tus dudas mientras practicas con tu propio kit.",
+                        index: 1
+                    };
+                } else {
+                    return {
+                        title: "Ponteguapa Personalizado 1 a 1",
+                        desc: "¡La experiencia de lujo definitiva! Diseñada especialmente para quienes desean una mentoría individual integral que incluye diagnóstico morfológico, colorimetría y diseño de estilo a medida.",
+                        index: 2
+                    };
+                }
+            };
+
+            const resultDetails = result ? getResultDetails(result) : null;
+
+            return (
+                <div className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-md rounded-3xl p-5 sm:p-6 md:p-8 shadow-xl border border-gold/20 mb-10 md:mb-16 relative overflow-hidden text-left">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold/40 via-gold to-gold/40"></div>
+                    
+                    {/* "Hilo de Oro" elastic progress bar */}
+                    <div className="w-full h-[2.5px] bg-nude-100 rounded-full mb-6 overflow-hidden relative">
+                        <motion.div 
+                            animate={{ width: `${result ? 100 : ((currentStep + 1) / questions.length) * 100}%` }}
+                            transition={{ type: "spring", stiffness: 80, damping: 15 }}
+                            className="h-full bg-gold rounded-full"
+                        ></motion.div>
+                    </div>
+
+                    <AnimatePresence mode="wait">
+                        {!result && !isCalculating && (
+                            <motion.div
+                                key={currentStep}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ duration: 0.3 }}
+                                className="flex flex-col items-center"
+                            >
+                                <span className="text-[10px] font-semibold tracking-[0.2em] text-gold uppercase mb-2">Pregunta {currentStep + 1} de {questions.length}</span>
+                                <h4 className="font-playfair text-lg md:text-xl text-nude-900 text-center font-semibold mb-6 min-h-[50px] leading-relaxed">{questions[currentStep].q}</h4>
+                                
+                                <div className="w-full flex flex-col gap-3">
+                                    {questions[currentStep].options.map((opt, i) => (
+                                        <motion.button
+                                            key={i}
+                                            initial={{ opacity: 0, y: 15 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: i * 0.08, type: "spring", stiffness: 120 }}
+                                            onClick={() => handleAnswer(opt.val)}
+                                            className="w-full text-left font-poppins text-xs md:text-sm p-3.5 sm:p-4 bg-[#D6AD99] hover:bg-[#b88a73] border border-transparent rounded-xl sm:rounded-2xl transition-all duration-300 shadow-md hover:shadow-lg text-white flex items-center gap-3 active:scale-[0.99] group/btn"
+                                        >
+                                            <span className="w-7 h-7 rounded-full bg-white/20 group-hover/btn:bg-white/35 text-white flex items-center justify-center font-playfair italic text-xs font-semibold shrink-0 transition-colors duration-300">
+                                                {String.fromCharCode(65 + i)}
+                                            </span>
+                                            <span className="font-medium tracking-wide">{opt.text}</span>
+                                        </motion.button>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {isCalculating && (
+                            <motion.div
+                                key="loading"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="py-12 flex flex-col items-center justify-center"
+                            >
+                                <div className="relative w-16 h-16 mb-4">
+                                    <div className="absolute inset-0 rounded-full border-2 border-nude-150"></div>
+                                    <motion.div 
+                                        animate={{ rotate: 360 }}
+                                        transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+                                        className="absolute inset-0 rounded-full border-2 border-t-gold border-r-gold"
+                                    ></motion.div>
+                                </div>
+                                <p className="font-playfair italic text-nude-800 text-lg">Analizando tus respuestas beauty...</p>
+                            </motion.div>
+                        )}
+
+                        {result && (
+                            <motion.div
+                                key="result"
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ type: "spring", stiffness: 100 }}
+                                className="text-center flex flex-col items-center py-4"
+                            >
+                                <div className="w-12 h-12 rounded-full bg-gold/15 text-gold flex items-center justify-center mb-4 text-xl">✦</div>
+                                <span className="text-[10px] font-bold tracking-[0.2em] text-gold uppercase mb-2">¡Recomendación a tu Medida!</span>
+                                <h3 className="font-playfair text-2xl md:text-3xl text-nude-900 font-semibold mb-3">{resultDetails.title}</h3>
+                                <p className="font-poppins text-xs md:text-sm text-nude-700 font-light max-w-md leading-relaxed mb-8">
+                                    {resultDetails.desc}
+                                </p>
+                                
+                                <div className="flex flex-col sm:flex-row gap-3 w-full justify-center max-w-sm">
+                                    <motion.button
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.1 }}
+                                        onClick={() => onRecommend(resultDetails.index)}
+                                        className="py-3.5 px-6 rounded-full bg-gold text-white font-poppins text-[10px] font-bold uppercase tracking-widest shadow-md hover:bg-gold-dark hover:shadow-lg transition-all duration-300"
+                                    >
+                                        Explorar Experiencia
+                                    </motion.button>
+                                    <motion.button
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.2 }}
+                                        onClick={resetQuiz}
+                                        className="py-3.5 px-6 rounded-full bg-nude-900 text-white font-poppins text-[10px] font-bold uppercase tracking-widest hover:bg-nude-800 shadow-md hover:shadow-lg transition-all duration-300"
+                                    >
+                                        Repetir Test
+                                    </motion.button>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+            );
+        };
+
+        const TabbedShowcaseWithQuiz = ({ packages, data }) => {
+            const [activeTab, setActiveTab] = useState(1); 
+            const [showQuiz, setShowQuiz] = useState(false);
+
+            const handleQuizRecommendation = (index) => {
+                setActiveTab(index);
+                setShowQuiz(false);
+                setTimeout(() => {
+                    try {
+                        const element = document.getElementById("package-showcase");
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    } catch (err) {
+                        console.warn("scrollIntoView failed, scrolling manually:", err);
+                        try {
+                            const element = document.getElementById("package-showcase");
+                            if (element) element.scrollIntoView();
+                        } catch (innerErr) {
+                            window.scrollTo({ top: document.getElementById("package-showcase")?.offsetTop || 0, behavior: 'smooth' });
+                        }
+                    }
+                }, 150);
+            };
+
+            const activePkg = packages[activeTab];
+
+            const tabThemes = [
+                { 
+                    bg: "bg-[#CC9980]/8 shadow-[0_4px_15px_rgba(204,153,128,0.06)] hover:bg-[#CC9980]/15", 
+                    border: "border-[#CC9980]/35", 
+                    text: "text-[#8C5D47]", 
+                    subText: "text-[#8C5D47]/80",
+                    activeBg: "bg-[#CC9980]", 
+                    activeText: "text-white" 
+                }, 
+                { 
+                    bg: "bg-[#B88A73]/8 shadow-[0_4px_15px_rgba(184,138,115,0.06)] hover:bg-[#B88A73]/15", 
+                    border: "border-[#B88A73]/35", 
+                    text: "text-[#805540]", 
+                    subText: "text-[#805540]/80",
+                    activeBg: "bg-[#B88A73]", 
+                    activeText: "text-white" 
+                }, 
+                { 
+                    bg: "bg-[#D6AD99]/10 shadow-[0_4px_15px_rgba(214,173,153,0.06)] hover:bg-[#D6AD99]/20", 
+                    border: "border-[#D6AD99]/45", 
+                    text: "text-[#94614A]", 
+                    subText: "text-[#94614A]/80",
+                    activeBg: "bg-[#D6AD99]", 
+                    activeText: "text-white" 
+                } 
+            ];
+
+            return (
+                <section className="py-16 md:py-24 px-4 sm:px-6 bg-nude-100 relative overflow-hidden" id="package-showcase">
+                    <style>{`
+                        .no-scrollbar::-webkit-scrollbar {
+                            display: none;
+                        }
+                    `}</style>
+                    <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+                        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-nude-200 blur-3xl"></div>
+                        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-champagne blur-3xl"></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        
+                        {/* Interactive Quiz Toggle */}
+                        <div className="text-center mb-10 flex flex-col items-center">
+                            <button 
+                                onClick={() => setShowQuiz(!showQuiz)}
+                                className="inline-flex items-center gap-2.5 py-3 px-6 rounded-full bg-white hover:bg-gold hover:text-white border border-gold/40 text-gold shadow-md font-poppins text-xs font-semibold tracking-widest uppercase transition-all duration-300 transform hover:-translate-y-1 mb-8"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                {showQuiz ? "Cerrar Test" : "¿Cuál es tu Ponteguapa ideal? Haz el Test"}
+                            </button>
+
+                            <AnimatePresence>
+                                {showQuiz && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: "auto" }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="w-full overflow-hidden"
+                                    >
+                                        <BeautyMatcherQuiz onRecommend={handleQuizRecommendation} />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Responsive Switcher Tabs (Vertical Stack on Mobile, Horizontal Row on Desktop) */}
+                        <div className="max-w-md md:max-w-xl mx-auto mb-10 md:mb-16 px-4 md:px-0">
+                            <div 
+                                className="w-full flex flex-col md:flex-row justify-center items-stretch md:items-center gap-3 md:gap-4.5"
+                            >
+                                {packages.map((pkg, i) => {
+                                    const isActive = activeTab === i;
+                                    return (
+                                        <button
+                                            key={i}
+                                            onClick={() => setActiveTab(i)}
+                                            className={`w-full md:flex-1 py-3.5 md:py-4 px-5 rounded-2xl font-poppins text-[10px] md:text-xs font-bold uppercase tracking-widest transition-all duration-300 relative overflow-hidden flex flex-col items-center justify-center text-center group ${
+                                                isActive 
+                                                    ? `${tabThemes[i].activeBg} ${tabThemes[i].activeText} shadow-md border-[1.5px] border-transparent md:scale-105` 
+                                                    : `${tabThemes[i].bg} border-[1.5px] ${tabThemes[i].border} ${tabThemes[i].text} hover:bg-gold/5 hover:border-gold hover:text-gold`
+                                            }`}
+                                        >
+                                            {isActive && (
+                                                <motion.div 
+                                                    layoutId="activeTabIndicator" 
+                                                    className="absolute inset-0 bg-gold/5 blur-[2px]"
+                                                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                                />
+                                            )}
+                                            <span key={pkg.title} className="relative z-10 block">{pkg.title}</span>
+                                            <span 
+                                                key={pkg.subtitle} 
+                                                className={`relative z-10 block text-[8px] font-light italic mt-1 font-playfair transition-colors duration-300 ${
+                                                    isActive ? 'text-white/95' : `${tabThemes[i].subText} group-hover:text-gold`
+                                                }`}
+                                            >
+                                                {pkg.subtitle}
+                                            </span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        {/* Two-Column Showcase Section */}
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={activeTab}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.4 }}
+                                className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-stretch"
+                            >
+                                {/* Left Column - Editorial Card */}
+                                <motion.div 
+                                    initial={{ opacity: 0, x: typeof window !== 'undefined' && window.innerWidth < 1024 ? 0 : -25, y: typeof window !== 'undefined' && window.innerWidth < 1024 ? 20 : 0 }}
+                                    animate={{ opacity: 1, x: 0, y: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.05 }}
+                                    className="lg:col-span-5 flex flex-col bg-white rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl border border-gold/10 relative overflow-hidden justify-between group"
+                                >
+                                    <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-gold rounded-tl-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-gold rounded-tr-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-gold rounded-bl-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-gold rounded-br-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                                    <div className="text-left">
+                                        <div className="flex justify-between items-center mb-6">
+                                            <span className="bg-gold/10 text-gold text-[9px] tracking-[0.25em] font-semibold uppercase px-4 py-1.5 rounded-full">
+                                                {activePkg.subtitle}
+                                            </span>
+                                            {activePkg.featured && (
+                                                <span className="bg-[#D6AD99] text-white text-[8px] tracking-widest font-semibold uppercase px-3 py-1.5 rounded-md">
+                                                    Recomendado
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        <h3 className="font-playfair text-2xl md:text-3xl text-nude-900 mb-4 font-semibold tracking-wide uppercase leading-snug">
+                                            {activePkg.title}
+                                        </h3>
+                                        <div className="h-[1px] w-16 bg-gold mb-6"></div>
+                                        
+                                        <p className="font-poppins text-xs md:text-sm text-nude-700 leading-relaxed font-light mb-8">
+                                            {activePkg.desc}
+                                        </p>
+                                    </div>
+
+                                    <div className="mt-auto border-t border-nude-100 pt-6 text-left">
+                                        <span className="block font-poppins text-[10px] font-semibold uppercase tracking-widest text-gold mb-2">Valor de la experiencia</span>
+                                        <span className="font-playfair text-3xl text-nude-900 font-medium block mb-6">{activePkg.price}</span>
+                                        
+                                        <a 
+                                            href={`https://wa.me/573113178349?text=Hola,%20me%20interesa%20la%20experiencia%20Ponteguapa%20${encodeURIComponent(activePkg.title)}`} 
+                                            target="_blank" 
+                                            rel="noreferrer" 
+                                            className="block w-full py-3.5 sm:py-4 text-center rounded-full uppercase text-[10px] md:text-xs tracking-widest font-bold bg-[#D6AD99] hover:bg-[#b88a73] text-white shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
+                                        >
+                                            Reservar Modalidad
+                                        </a>
+                                    </div>
+                                </motion.div>
+
+                                {/* Right Column - Syllabus List */}
+                                <motion.div 
+                                    initial={{ opacity: 0, x: typeof window !== 'undefined' && window.innerWidth < 1024 ? 0 : 25, y: typeof window !== 'undefined' && window.innerWidth < 1024 ? 20 : 0 }}
+                                    animate={{ opacity: 1, x: 0, y: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.15 }}
+                                    className="lg:col-span-7 flex flex-col bg-white rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl border border-gold/10 relative justify-between text-left"
+                                >
+                                    <div>
+                                        <h4 className="font-poppins text-xs font-bold tracking-[0.25em] text-nude-900 uppercase mb-8 border-b border-nude-100 pb-3 flex items-center gap-2">
+                                            <span className="text-gold">✦</span> Lo que vas a vivir & aprender
+                                        </h4>
+                                        
+                                        <ul className="space-y-4">
+                                            {activePkg.includes.map((item, i) => (
+                                                <motion.li 
+                                                    initial={{ opacity: 0, x: 15 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: i * 0.08 }}
+                                                    key={i} 
+                                                    className="flex items-start bg-nude-50/50 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-nude-50 transition-colors duration-300"
+                                                >
+                                                    <span className="text-gold mr-3.5 mt-0.5 text-xs shrink-0">✦</span>
+                                                    <div>
+                                                        <p className="font-poppins text-xs md:text-sm text-nude-900 font-medium leading-normal">{item.main}</p>
+                                                        {item.sub && (
+                                                            <p className="font-poppins text-[10px] md:text-xs text-nude-600 mt-1 font-light leading-relaxed">{item.sub}</p>
+                                                        )}
+                                                    </div>
+                                                </motion.li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    <div className="mt-8 p-4 rounded-2xl bg-gold/5 border border-gold/15 flex items-center gap-3">
+                                        <span className="text-gold font-playfair italic text-lg shrink-0">💕</span>
+                                        <p className="font-poppins text-[10px] md:text-xs text-nude-700 leading-relaxed font-light">
+                                            Aprenderás a conectar con tu esencia. No buscamos maquillar tu rostro de forma genérica, sino potenciar tus rasgos, autenticidad y autoconfianza.
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
+                </section>
+            );
+        };
+
+        const LuxuryTimeline = ({ packages, data }) => {
+            const pkg = packages[0]; 
+            const classes = pkg.includes; 
+
+            const [expandedClass, setExpandedClass] = useState(0); // Default to Class 1 open
+            const [scrollProgress, setScrollProgress] = useState(0);
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    const container = document.getElementById("luxury-timeline-container");
+                    if (!container) return;
+
+                    const rect = container.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const triggerOffset = windowHeight * 0.75; // Triggers trace line dynamically
+
+                    const currentPosition = triggerOffset - rect.top;
+                    const totalHeight = rect.height;
+                    const progress = currentPosition / (totalHeight - 120);
+
+                    setScrollProgress(Math.min(Math.max(progress, 0), 1));
+                };
+
+                window.addEventListener("scroll", handleScroll);
+                handleScroll();
+                return () => window.removeEventListener("scroll", handleScroll);
+            }, []);
+
+            useEffect(() => {
+                const timer = setTimeout(() => {
+                    const container = document.getElementById("luxury-timeline-container");
+                    if (container) {
+                        const rect = container.getBoundingClientRect();
+                        const windowHeight = window.innerHeight;
+                        const triggerOffset = windowHeight * 0.75;
+                        const currentPosition = triggerOffset - rect.top;
+                        const totalHeight = rect.height;
+                        const progress = currentPosition / (totalHeight - 120);
+                        setScrollProgress(Math.min(Math.max(progress, 0), 1));
+                    }
+                }, 310);
+                return () => clearTimeout(timer);
+            }, [expandedClass]);
+
+            return (
+                <section className="py-16 md:py-24 px-4 sm:px-6 bg-nude-100 relative overflow-hidden" id="luxury-timeline-container">
+                    <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+                        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-nude-200 blur-3xl"></div>
+                        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-champagne blur-3xl"></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
+                            
+                            {/* Sticky Left Column - Editorial Intro */}
+                            <div className="lg:col-span-4 lg:sticky lg:top-28 flex flex-col bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-gold/15 justify-between text-left">
+                                <div>
+                                    <span className="bg-gold/10 text-gold text-[9px] tracking-[0.25em] font-semibold uppercase px-4 py-1.5 rounded-full mb-6 inline-block">
+                                        {pkg.subtitle}
+                                    </span>
+                                    <h3 className="font-playfair text-2xl md:text-3xl text-nude-900 mb-4 font-semibold tracking-wide uppercase leading-snug">
+                                        {pkg.title}
+                                    </h3>
+                                    <div className="h-[1px] w-12 bg-gold mb-6"></div>
+                                    <p className="font-poppins text-xs md:text-sm text-nude-700 leading-relaxed font-light mb-6">
+                                        {pkg.desc}
+                                    </p>
+                                </div>
+
+                                <div className="border-t border-nude-100 pt-6 mt-6">
+                                    <span className="block font-poppins text-[10px] font-semibold uppercase tracking-widest text-gold mb-2">Valor del Programa</span>
+                                    <span className="font-playfair text-3xl text-nude-900 font-medium block mb-6">{pkg.price}</span>
+                                    
+                                    <a 
+                                        href={`https://wa.me/573113178349?text=Hola,%20me%20interesa%20la%20Especialización%20Bridal%20Mentorship`} 
+                                        target="_blank" 
+                                        rel="noreferrer" 
+                                        className="block w-full py-4 text-center rounded-full uppercase text-[10px] tracking-widest font-bold bg-[#D6AD99] hover:bg-[#b88a73] text-white shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
+                                    >
+                                        Agendar Entrevista
+                                    </a>
+                                </div>
+                            </div>
+
+                            {/* Right Column - Interactive Accordion Timeline */}
+                            <div className="lg:col-span-8 relative pl-4 md:pl-8 text-left">
+                                
+                                {/* Background Tracer Line - Centered Mathematically */}
+                                <div className="absolute left-[36px] md:left-[64px] top-6 bottom-6 w-[2px] bg-nude-200 rounded-full"></div>
+                                
+                                {/* Scroll-linked Gold Active Tracer Line - Centered Mathematically */}
+                                <div 
+                                    className="absolute left-[36px] md:left-[64px] top-6 w-[2px] bg-gradient-to-b from-gold via-gold/80 to-gold/40 origin-top rounded-full transition-transform duration-100 ease-out z-0"
+                                    style={{ height: `calc(100% - 48px)`, transform: `scaleY(${scrollProgress})` }}
+                                ></div>
+                                
+                                <h4 className="font-poppins text-xs font-bold tracking-[0.25em] text-nude-900 uppercase mb-12 border-b border-nude-100 pb-3 flex items-center gap-2">
+                                    <span className="text-gold">✦</span> Ruta de la Mentoría (Temarios)
+                                </h4>
+
+                                <div className="flex flex-col gap-6 md:gap-8 relative z-10">
+                                    {classes.map((cls, i) => {
+                                        const isExpanded = expandedClass === i;
+                                        return (
+                                            <motion.div
+                                                key={i}
+                                                initial={{ opacity: 0, x: 25 }}
+                                                whileInView={{ opacity: 1, x: 0 }}
+                                                viewport={{ once: true, margin: "-100px" }}
+                                                transition={{ duration: 0.6, delay: i * 0.08, type: "spring" }}
+                                                className="flex items-start gap-4 md:gap-6 relative group"
+                                            >
+                                                {/* Timeline Node Badge - Center mathematically aligns with tracer line */}
+                                                <div 
+                                                    onClick={() => setExpandedClass(isExpanded ? -1 : i)}
+                                                    className={`w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center shrink-0 shadow-md font-playfair text-sm md:text-lg font-bold italic z-10 cursor-pointer transition-all duration-500 select-none ${
+                                                        isExpanded 
+                                                            ? "bg-gold text-white border-2 border-transparent scale-110 shadow-gold/25" 
+                                                            : "bg-white border-2 border-gold/40 text-gold group-hover:border-gold group-hover:bg-gold/5"
+                                                    }`}
+                                                >
+                                                    {i + 1}
+                                                </div>
+
+                                                {/* Interactive Class Box Accordion */}
+                                                <div className="bg-white rounded-2xl shadow-sm border border-nude-200/60 hover:border-gold/30 group-hover:shadow-md transition-all duration-300 flex-grow overflow-hidden">
+                                                    
+                                                    {/* Header Trigger */}
+                                                    <div 
+                                                        onClick={() => setExpandedClass(isExpanded ? -1 : i)}
+                                                        className="p-5 md:p-6 flex justify-between items-center cursor-pointer select-none"
+                                                    >
+                                                        <div>
+                                                            <span className="block font-poppins text-[9px] md:text-[10px] font-bold text-gold uppercase tracking-widest mb-1">
+                                                                Clase {i + 1}
+                                                            </span>
+                                                            <h5 className="font-playfair text-base md:text-lg text-nude-900 font-semibold group-hover:text-gold transition-colors duration-300 leading-snug">
+                                                                {cls.main.replace(/Clase \d+:\s*/, "")}
+                                                            </h5>
+                                                        </div>
+                                                        <motion.div 
+                                                            animate={{ rotate: isExpanded ? 180 : 0 }}
+                                                            className="text-gold text-xs shrink-0 ml-4 w-6 h-6 rounded-full bg-nude-50 flex items-center justify-center border border-gold/15"
+                                                        >
+                                                            ▼
+                                                        </motion.div>
+                                                    </div>
+
+                                                    {/* Expanded Content Sublist */}
+                                                    <AnimatePresence initial={false}>
+                                                        {isExpanded && (
+                                                            <motion.div
+                                                                initial={{ height: 0, opacity: 0 }}
+                                                                animate={{ height: "auto", opacity: 1 }}
+                                                                exit={{ height: 0, opacity: 0 }}
+                                                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                                                className="overflow-hidden bg-nude-50/15"
+                                                            >
+                                                                <div className="px-5 pb-6 md:px-6 border-t border-nude-100/45 pt-4">
+                                                                    <p className="font-poppins text-xs text-nude-600 font-light italic mb-4 leading-relaxed">
+                                                                        {cls.sub}
+                                                                    </p>
+                                                                    <ul className="space-y-2.5 pl-3">
+                                                                        {cls.details && cls.details.map((detail, idx) => (
+                                                                            <li key={idx} className="flex items-start text-xs font-poppins font-light text-nude-700 leading-relaxed">
+                                                                                <span className="text-gold mr-2.5 mt-1 text-[9px] shrink-0">✦</span>
+                                                                                <span>{detail}</span>
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                </div>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+
+                                                </div>
+                                            </motion.div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Packages = ({ data }) => {
+            const pkgs = data.packages;
+            const layout = data.layout;
+
+            if (layout === 'quiz-tabs') {
+                return <TabbedShowcaseWithQuiz packages={pkgs} data={data} />;
+            }
+
+            if (layout === 'timeline') {
+                return <LuxuryTimeline packages={pkgs} data={data} />;
+            }
+
+            if (pkgs.length === 1 && !pkgs[0].layout) {
+                return (
+                    <EditorialSinglePackage 
+                        title={pkgs[0].title}
+                        subtitle={pkgs[0].subtitle}
+                        desc={pkgs[0].desc}
+                        price={pkgs[0].price}
+                        includes={pkgs[0].includes}
+                        heroImage={data.heroImage}
+                        titleTag={data.introTitle}
+                    />
+                );
+            }
+
+            return (
+                <section className="py-24 px-6 bg-nude-100 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+                        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-nude-200 blur-3xl"></div>
+                        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-champagne blur-3xl"></div>
+                    </div>
+                    <div className={`max-w-[1200px] mx-auto ${
+                        pkgs.length === 1 && !pkgs[0].layout 
+                            ? 'flex justify-center' 
+                            : pkgs.length === 1 && pkgs[0].layout === 'interactive' 
+                                ? '' 
+                                : pkgs.length === 2 
+                                    ? 'grid grid-cols-1 lg:grid-cols-2 max-w-4xl' 
+                                    : 'grid grid-cols-1 lg:grid-cols-3'
+                    } gap-6 items-stretch relative z-10`}>
+                        {pkgs.map((pkg, i) => (
+                            pkg.layout === 'interactive' 
+                                ? <InteractiveSyllabus key={i} {...pkg} />
+                                : <div key={i} className={pkgs.length === 1 ? 'w-full md:w-[450px]' : ''}>
+                                    <PackageCard index={i} {...pkg} />
+                                  </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        const Complementary = ({ data }) => {
+            if (!data.showComplementary) return null;
+            return (
+                <section className="py-24 px-6 bg-nude-900 text-white relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#D4AF37 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+                    <div className="max-w-4xl mx-auto relative z-10">
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="glass-dark p-10 md:p-16 text-center border-gold/30 border"
+                        >
+                            <h2 className="font-playfair text-3xl md:text-4xl text-gold-light mb-6">Experiencias Complementarias Bridal</h2>
+                            <p className="font-poppins text-nude-100 text-lg leading-relaxed mb-8 font-light max-w-2xl mx-auto">
+                                Contamos con un equipo beauty especializado para acompañar la preparación estética de damas de honor, familiares e invitadas durante el gran día.
+                            </p>
+                            
+                            <div className="flex flex-wrap justify-center gap-4 mb-10">
+                                <span className="bg-white/10 px-6 py-2 rounded-full font-poppins text-sm tracking-wider uppercase backdrop-blur-sm border border-white/20">Maquillaje Social</span>
+                                <span className="bg-white/10 px-6 py-2 rounded-full font-poppins text-sm tracking-wider uppercase backdrop-blur-sm border border-white/20">Peinado</span>
+                                <span className="bg-white/10 px-6 py-2 rounded-full font-poppins text-sm tracking-wider uppercase backdrop-blur-sm border border-white/20">Puesta de Pestañas</span>
+                            </div>
+
+                            <div className="mt-8 border-t border-white/20 pt-8">
+                                <span className="block font-poppins text-xs uppercase tracking-widest text-gold mb-2">Valor por persona</span>
+                                <span className="font-playfair text-4xl text-white">$300.000</span>
+                            </div>
+                        </motion.div>
+                    </div>
+                </section>
+            );
+        };
+
+        const InteractiveFAQ = ({ data }) => {
+            const [expandedIndex, setExpandedIndex] = useState(-1);
+            const [activeCategory, setActiveCategory] = useState("Todo");
+            const [searchQuery, setSearchQuery] = useState("");
+
+            const faqs = data.faqList || (data.infoList && data.infoList.map((info, i) => {
+                const parts = info.split(/:\s*/);
+                if (parts.length > 1) {
+                    return { q: parts[0], a: parts.slice(1).join(": "), cat: "General" };
+                }
+                return { q: "¿Qué debo tener en cuenta?", a: info, cat: "General" };
+            })) || [];
+
+            const categories = ["Todo", ...new Set(faqs.map(faq => faq.cat))];
+
+            const filteredFaqs = faqs.filter(faq => {
+                const matchesCategory = activeCategory === "Todo" || faq.cat === activeCategory;
+                const matchesSearch = faq.q.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                     faq.a.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            return (
+                <section className="py-24 px-6 bg-nude-50">
+                    <div className="max-w-4xl mx-auto text-left">
+                        <motion.div 
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <h2 className="font-playfair text-3xl md:text-4xl text-nude-900 text-center mb-4 font-semibold uppercase tracking-wide">Información Importante</h2>
+                            <p className="font-poppins text-xs md:text-sm text-nude-600 text-center font-light mb-12">
+                                Resuelve tus dudas al instante sobre metodología, reservas y formas de pago.
+                            </p>
+
+                            {/* Search Box */}
+                            <div className="max-w-md mx-auto mb-10 relative">
+                                <input 
+                                    type="text" 
+                                    placeholder="Buscar preguntas importantes..."
+                                    value={searchQuery}
+                                    onChange={(e) => { setSearchQuery(e.target.value); setExpandedIndex(-1); }}
+                                    className="w-full px-5 py-3.5 pl-12 rounded-full border border-nude-200 focus:border-gold focus:ring-1 focus:ring-gold/30 focus:scale-[1.01] focus:outline-none bg-white/70 backdrop-blur-sm text-xs font-poppins tracking-wider font-light transition-all duration-300 shadow-sm focus:shadow-md"
+                                />
+                                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-nude-400" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            </div>
+
+                           {/* Categories Tabs */}
+                           {categories.length > 2 && (
+                               <div className="flex flex-wrap justify-center items-center gap-2 mb-10">
+                                   {categories.map((cat, idx) => (
+                                       <button
+                                           key={idx}
+                                           onClick={() => { setActiveCategory(cat); setExpandedIndex(-1); }}
+                                           className={`py-2 px-5 rounded-full font-poppins text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all duration-300 ${
+                                               activeCategory === cat 
+                                                   ? "bg-gold text-white shadow-sm border border-transparent" 
+                                                   : "bg-white border border-nude-200 text-nude-700 hover:border-gold hover:text-nude-900"
+                                           }`}
+                                       >
+                                           {cat}
+                                       </button>
+                                   ))}
+                               </div>
+                           )}
+
+                           {/* FAQs List */}
+                           <div className="flex flex-col gap-4">
+                               <AnimatePresence mode="wait">
+                                   {filteredFaqs.length > 0 ? (
+                                       filteredFaqs.map((faq, i) => {
+                                           const isExpanded = expandedIndex === i;
+                                           return (
+                                                <motion.div 
+                                                    layout
+                                                    initial={{ opacity: 0, y: 15 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: -15 }}
+                                                    transition={{ duration: 0.3, delay: i * 0.05 }}
+                                                    key={faq.q} 
+                                                    className="bg-white rounded-2xl border border-nude-200/80 hover:border-gold/30 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
+                                                >
+                                                   <div 
+                                                       onClick={() => setExpandedIndex(isExpanded ? -1 : i)}
+                                                       className="p-5 md:p-6 flex justify-between items-center cursor-pointer select-none"
+                                                   >
+                                                       <div className="flex items-center gap-4 text-left">
+                                                           <motion.span 
+                                                               animate={{ rotate: isExpanded ? 90 : 0 }}
+                                                               className={`text-xs shrink-0 transition-colors duration-300 ${isExpanded ? "text-gold" : "text-nude-450"}`}
+                                                           >
+                                                               {isExpanded ? "✦" : "✧"}
+                                                           </motion.span>
+                                                           <span className="font-poppins text-xs md:text-sm font-semibold text-nude-900 leading-snug">
+                                                               {faq.q}
+                                                           </span>
+                                                       </div>
+                                                       <motion.div 
+                                                           animate={{ rotate: isExpanded ? 180 : 0 }}
+                                                           className="text-gold text-xs shrink-0 ml-4 w-6 h-6 rounded-full bg-nude-50 flex items-center justify-center border border-gold/15"
+                                                       >
+                                                           ▼
+                                                       </motion.div>
+                                                   </div>
+
+                                                   <AnimatePresence initial={false}>
+                                                       {isExpanded && (
+                                                           <motion.div
+                                                               initial={{ height: 0, opacity: 0 }}
+                                                               animate={{ height: "auto", opacity: 1 }}
+                                                               exit={{ height: 0, opacity: 0 }}
+                                                               transition={{ duration: 0.3 }}
+                                                               className="overflow-hidden bg-nude-50/10"
+                                                           >
+                                                               <p className="px-6 pb-6 pl-14 font-poppins text-xs md:text-sm text-nude-700 leading-relaxed font-light">
+                                                                   {faq.a}
+                                                               </p>
+                                                           </motion.div>
+                                                       )}
+                                                   </AnimatePresence>
+                                               </motion.div>
+                                           );
+                                       })
+                                   ) : (
+                                       <div className="text-center py-12 text-nude-500 font-poppins text-xs md:text-sm">
+                                           No se encontraron respuestas para tu búsqueda.
+                                       </div>
+                                   )}
+                               </AnimatePresence>
+                           </div>
+                       </motion.div>
+                   </div>
+               </section>
+           );
+       };
+
+        const Footer = () => {
+            return (
+                <footer className="site-footer bg-white">
+                    <div className="container">
+                        <div className="footer-top">
+                            <a href="#" className="back-to-top" onClick={(e) => {e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'});}}>VOLVER ARRIBA &nbsp; <span>↑</span></a>
+                        </div>
+                        <div className="footer-main">
+                            <div className="footer-col subscribe-col">
+                                <h3>MANTENTE AL DÍA</h3>
+                                <p>Suscríbete a nuestro boletín para recibir las últimas novedades, consejos y ofertas exclusivas.</p>
+                                <form className="subscribe-form" onSubmit={(e) => e.preventDefault()}>
+                                    <input type="email" placeholder="EMAIL" required />
+                                    <button type="submit" className="btn-submit-new" style={{ marginTop: '1rem', width: 'max-content' }}>SUSCRIBIRSE</button>
+                                </form>
+                            </div>
+                            
+                            <div className="footer-col logo-col">
+                                <a href="index.html" className="footer-logo">
+                                    <img src="assets/logo_lili.png" alt="Lili Logo" />
+                                </a>
+                                <p className="tagline">Maquillaje profesional para cada ocasión.</p>
+                                <div className="footer-social">
+                                    <a href="#">IG</a>
+                                    <a href="#">FB</a>
+                                    <a href="#">IN</a>
+                                </div>
+                            </div>
+                            
+                            <div className="footer-col nav-col">
+                                <h3>NAVEGAR</h3>
+                                <div className="footer-nav-links">
+                                    <ul>
+                                        <li><a href="index.html#hero">INICIO</a></li>
+                                        <li><a href="index.html#services">SERVICIOS</a></li>
+                                        <li><a href="index.html#cursos">CURSOS</a></li>
+                                    </ul>
+                                    <ul>
+                                        <li><a href="index.html#contact">CONTACTO</a></li>
+                                        <li><a href="index.html#about">SOBRE MÍ</a></li>
+                                        <li><a href="#">PRIVACIDAD</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="footer-bottom">
+                            <p>&copy; COPYRIGHT 2026 | TODOS LOS DERECHOS RESERVADOS | LILI MAKEUP</p>
+                        </div>
+                    </div>
+                </footer>
+            );
+        };
+
+        const WhatsAppBtn = () => {
+            return (
+                <a href="https://wa.me/573113178349" className="whatsapp-float" target="_blank" rel="noopener noreferrer">
+                    <img src="./assets/whatsapp.png" alt="WhatsApp" />
+                </a>
+            );
+        };
+
+        const PAGE_DATA = {
+            consultoria: {
+                heroTitle: "Consultoría de Imagen",
+                heroSubtitle: "Transforma tu presencia con estilo.",
+                heroImage: "assets/Lili_hero.png",
+                introTitle: "Temario de la Charla",
+                introDesc1: "Una sesión diseñada para potenciar tu imagen personal en el entorno empresarial, enseñándote a proyectar seguridad, coherencia y elegancia.",
+                introDesc2: "Exploraremos desde los principios básicos de la imagen y los estilos universales, hasta la aplicación práctica de colorimetría y morfología.",
+                packages: [
+                    {
+                        title: "WORKSHOP DE IMAGEN",
+                        subtitle: "Temas de la charla",
+                        desc: "Descubre cómo utilizar el estilo como tu mejor herramienta de comunicación profesional.",
+                        price: "Consultar",
+                        featured: true,
+                        layout: 'interactive',
+                        centerImage: 'assets/Lili_hero.png',
+                        includes: [
+                            { main: "1. Introducción a la imagen personal", sub: "¿Qué es la imagen personal? • La primera impresión • Cómo comunica nuestra imagen." },
+                            { main: "2. El estilo personal", sub: "¿Qué es el estilo? • Cómo el estilo refleja la personalidad • El estilo como herramienta de comunicación." },
+                            { main: "3. Los 7 estilos universales", sub: "Natural • Clásico • Elegante • Romántico • Creativo • Dramático • Seductor." },
+                            { main: "4. Estilo y personalidad laboral", sub: "¿Qué comunica cada estilo? • Cómo adaptar el estilo al ambiente empresarial." },
+                            { main: "5. Colorimetría básica", sub: "Temperatura del color (cálidos y fríos) • Cómo influyen los colores en el rostro • Aplicación en la imagen profesional." },
+                            { main: "6. Tipos de cuerpo", sub: "Reloj de arena • Triángulo • Triángulo invertido • Rectángulo • Ovalado." },
+                            { main: "7. Cómo vestir según tu cuerpo", sub: "Proporción visual • Líneas que favorecen • Equilibrio en la silueta." },
+                            { main: "8. Accesorios en imagen profesional", sub: "Uso adecuado de accesorios • Equilibrio y elegancia • Accesorios que potencian la imagen." },
+                            { main: "9. Conclusiones y recomendaciones", sub: "La imagen como herramienta profesional • Coherencia entre personalidad, estilo e imagen." }
+                        ]
+                    }
+                ],
+                showComplementary: false,
+                infoList: [
+                    "Ideal para empresas que desean capacitar a su personal en presentación personal.",
+                    "La duración y enfoque de la charla pueden adaptarse según los objetivos del grupo.",
+                    "Se incluye material de apoyo interactivo para los asistentes."
+                ]
+            },
+            ponteguapa: {
+                heroTitle: "Ponteguapa",
+                heroSubtitle: "Transforma cómo te ves, te sientes y te comunicas.",
+                heroImage: "assets/social.png",
+                introTitle: "¿Qué es Ponteguapa?",
+                introDesc1: "Ponteguapa es una experiencia de transformación personal a través de la imagen, el maquillaje, el estilo y la comunicación no verbal.",
+                introDesc2: "Ponteguapa une: Asesoría de imagen, Maquillaje, Psicología de la ropa, Comunicación no verbal, Autocuidado, Estilo personal y Empoderamiento femenino. Todo vivido desde experiencias cercanas, prácticas y emocionalmente transformadoras.",
+                layout: 'quiz-tabs',
+                packages: [
+                    {
+                        title: "Experiencias Grupales",
+                        subtitle: "Empresas y eventos",
+                        desc: "Talleres experienciales diseñados para empresas, activaciones de marca, ferias, workshops o grupos de amigas.",
+                        price: "Consultar",
+                        includes: [
+                            { main: "Taller experiencial de transformación" },
+                            { main: "Actividades prácticas e interactivas" },
+                            { main: "Dinámicas de imagen y comunicación" },
+                            { main: "Tips personalizados para asistentes" },
+                            { main: "Beauty Corner opcional" }
+                        ]
+                    },
+                    {
+                        title: "Semi-personalizado",
+                        subtitle: "Grupos pequeños",
+                        desc: "Acompañamiento más cercano. Ideal para automaquillaje, procesos de imagen y experiencias premium.",
+                        price: "Consultar",
+                        includes: [
+                            { main: "Diagnóstico de imagen inicial" },
+                            { main: "Recomendaciones individuales de estilo" },
+                            { main: "Práctica guiada detallada" },
+                            { main: "Seguimiento básico post-sesión" }
+                        ]
+                    },
+                    {
+                        title: "Personalizado",
+                        subtitle: "Experiencia 1 a 1",
+                        desc: "Una mentoría individual diseñada exclusivamente según tus necesidades de marca o transformación personal.",
+                        price: "Consultar",
+                        featured: true,
+                        includes: [
+                            { main: "Asesoría integral e individual" },
+                            { main: "Diagnóstico facial y corporal detallado" },
+                            { main: "Diseño de estilo personal exclusivo" },
+                            { main: "Maquillaje y color guiado" },
+                            { main: "Guía personalizada digital" },
+                            { main: "Acompañamiento premium cercano" }
+                        ]
+                    }
+                ],
+                showComplementary: false,
+                infoList: [
+                    "Ponteguapa no busca cambiar quién eres, busca ayudarte a comunicar tu mejor versión.",
+                    "La belleza se trabaja desde la autenticidad, la seguridad y el amor propio.",
+                    "Integramos asesoría de imagen, maquillaje, psicología de la ropa y empoderamiento."
+                ],
+                faqList: [
+                    { q: "¿Qué es Ponteguapa y qué une?", a: "Ponteguapa es una experiencia de transformación personal a través de la imagen, el maquillaje, el estilo y la comunicación no verbal. Creemos que cuando una persona se siente bonita, coherente y segura con lo que refleja, comienza a brillar desde adentro hacia afuera. Une: Asesoría de imagen, Maquillaje, Psicología de la ropa, Comunicación no verbal, Autocuidado, Estilo personal y Empoderamiento femenino en experiencias cercanas, prácticas y emocionalmente transformadoras.", cat: "Concepto" },
+                    { q: "¿A quién va dirigido Ponteguapa?", a: "Para Mujeres: Aquellas que desean fortalecer su autoestima, en procesos de cambio personal o profesional, novias, emprendedoras, ejecutivas o quienes desean reconectar con su imagen. Para Empresas: Diseñado para fortalecer la imagen profesional de sus equipos, comunicación no verbal, presencia ejecutiva, seguridad y autoestima laboral, y el bienestar corporativo (ideal para equipos comerciales, atención al cliente, liderazgo femenino o bienestar empresarial).", cat: "Público Objetivo" },
+                    { q: "¿Qué trabajamos detalladamente en Ponteguapa?", a: "Trabajamos en 4 pilares fundamentales: 1) Imagen Personal (construcción de estilo, psicología de la ropa, comunicación no verbal y curaduría de guardarropa). 2) Maquillaje (automaquillaje, maquillaje social, visagismo y acabados modernos). 3) Color y armonía (colorimetría, combinación de prendas y accesorios). 4) Bienestar personal (autoimagen, seguridad al comunicar, presencia y lenguaje corporal).", cat: "Temas" },
+                    { q: "¿Cuál es el diferencial principal de Ponteguapa?", a: "Ponteguapa no busca cambiar quién eres, busca ayudarte a comunicar tu mejor versión. Aquí la belleza no se trabaja desde la perfección o estándares externos, sino desde la autenticidad, la seguridad y el amor propio. Cada experiencia está diseñada para que no solo te veas mejor... sino que también te sientas mejor contigo misma.", cat: "Diferencial" }
+                ]
+            },
+            ponteguapa_basico_empresas: {
+                heroTitle: "Ponteguapa Básico",
+                heroSubtitle: "Cuidado de la piel y automaquillaje corporativo.",
+                heroImage: "assets/social.png",
+                introTitle: "Potencia la Imagen Profesional de tu Equipo",
+                introDesc1: "Un taller introductorio diseñado para empresas que desean capacitar a sus equipos en el cuidado personal y maquillaje práctico para el día a día en la oficina.",
+                introDesc2: "Aprenderás técnicas rápidas de skincare y maquillaje natural para proyectar frescura, profesionalismo y confianza en el entorno laboral.",
+                packages: [
+                    {
+                        title: "PONTEGUAPA BÁSICO EMPRESAS",
+                        subtitle: "Imagen Corporativa & Autocuidado",
+                        desc: "Ideal para grupos comerciales, áreas de servicio al cliente y activaciones empresariales.",
+                        price: "Consultar",
+                        includes: [
+                            { main: "Rutina básica de Skincare", sub: "Preparación rápida y efectiva de la piel antes de maquillar." },
+                            { main: "Maquillaje Exprés de Oficina", sub: "Técnicas sencillas para lucir profesional en menos de 10 minutos." },
+                            { main: "Proyección de Imagen Laboral", sub: "Principios de presentación y coherencia con la marca de la empresa." },
+                            { main: "Kit de Apoyo Básico", sub: "Materiales y guías de referencia para cada asistente." }
+                        ]
+                    }
+                ],
+                showComplementary: false,
+                infoList: [
+                    "Diseñado especialmente para dinámicas de grupo y talleres corporativos.",
+                    "La duración y temario pueden adaptarse a los objetivos específicos de la organización."
+                ]
+            },
+            ponteguapa_medio_empresas: {
+                heroTitle: "Ponteguapa Medio",
+                heroSubtitle: "Estilo corporativo y colorimetría ejecutiva.",
+                heroImage: "assets/Lili_hero.png",
+                introTitle: "Protocolo & Presencia Empresarial",
+                introDesc1: "Taller enfocado en alinear la imagen del equipo con los valores ejecutivos de la marca, dominando el uso estratégico del color y el maquillaje en contextos de negocios.",
+                introDesc2: "Exploraremos las pautas de estilo profesional y la aplicación práctica de colorimetría en prendas y maquillaje de oficina.",
+                packages: [
+                    {
+                        title: "PONTEGUAPA MEDIO EMPRESAS",
+                        subtitle: "Estilo & Color Ejecutivos",
+                        desc: "Recomendado para juntas directivas, líderes de equipo y mandos medios.",
+                        price: "Consultar",
+                        includes: [
+                            { main: "Colorimetría Corporativa", sub: "Identificación de tonos clave que aportan luz y liderazgo." },
+                            { main: "Dress Code y Estilos Universales", sub: "Cómo adecuar las prendas según el entorno y protocolo de la empresa." },
+                            { main: "Maquillaje de Reuniones e Impacto", sub: "Look pulido para conferencias, juntas de negocios y videollamadas." },
+                            { main: "Asesoría Grupal", sub: "Diagnóstico express de siluetas y estilo personal de las asistentes." }
+                        ]
+                    }
+                ],
+                showComplementary: false,
+                infoList: [
+                    "Incluye material digital con las pautas de estilo de la empresa.",
+                    "Ideal para integrar en jornadas de capacitación de liderazgo femenino o bienestar corporativo."
+                ]
+            },
+            ponteguapa_avanzado_empresas: {
+                heroTitle: "Ponteguapa Avanzado",
+                heroSubtitle: "Liderazgo, marca personal y comunicación no verbal.",
+                heroImage: "assets/social-frente.png",
+                introTitle: "Marca Personal Ejecutiva Premium",
+                introDesc1: "Una mentoría avanzada para ejecutivos y líderes de alto rango que desean dominar el arte del estilismo corporativo de gala y la comunicación no verbal estratégica.",
+                introDesc2: "Diseñamos un plan de proyección de imagen integral que garantice seguridad, elegancia y magnetismo en eventos y juntas de alto impacto.",
+                packages: [
+                    {
+                        title: "PONTEGUAPA AVANZADO EMPRESAS",
+                        subtitle: "Liderazgo & Marca Personal",
+                        desc: "Mentoría de alto impacto para directivos, voceros y representantes corporativos.",
+                        price: "Consultar",
+                        includes: [
+                            { main: "Comunicación No Verbal Estratégica", sub: "Lenguaje corporal, presencia ejecutiva y proyección de seguridad." },
+                            { main: "Estilismo de Gala y Eventos", sub: "Pautas de protocolo de gala corporativo y selección de vestuario formal." },
+                            { main: "Maquillaje de Fotografía y Medios", sub: "Look impecable de larga duración diseñado para lentes de cámaras HD." },
+                            { main: "Curaduría y Proyección de Marca", sub: "Alineación de la marca personal con la visión corporativa premium." }
+                        ]
+                    }
+                ],
+                showComplementary: false,
+                infoList: [
+                    "Se incluye un manual de estilo digital exclusivo y personalizado para las participantes.",
+                    "Formato de workshop dinámico con sesiones prácticas grupales de comunicación."
+                ]
+            },
+            ponteguapa_basico_personas: {
+                heroTitle: "Ponteguapa Básico",
+                heroSubtitle: "Tu rutina diaria de skincare y maquillaje natural.",
+                heroImage: "assets/foto2.jpg",
+                introTitle: "Descubre tu Belleza Esencial",
+                introDesc1: "El punto de partida ideal para quienes desean aprender a cuidar su piel y lograr un look fresco y natural para el día a día, sin sentir que llevan una máscara.",
+                introDesc2: "Aprenderás a conocer tus facciones, estructurar tu kit básico y realizar un automaquillaje radiante de forma práctica.",
+                packages: [
+                    {
+                        title: "PONTEGUAPA BÁSICO PERSONAS",
+                        subtitle: "Automaquillaje Natural & Skincare",
+                        desc: "Perfecto para principiantes o quienes quieren simplificar y pulir su rutina diaria.",
+                        price: "Consultar",
+                        includes: [
+                            { main: "Análisis Facial e Identificación de Tipo de Piel", sub: "Rutina básica de skincare adaptada a tus necesidades." },
+                            { main: "Uso del Color Corrector y Bases Ligeras", sub: "Logra un tono uniforme y natural sin sobrecargar." },
+                            { main: "Diseño y Peinado de Cejas", sub: "Cómo enmarcar tu mirada de forma natural y armoniosa." },
+                            { main: "Técnicas Rápidas de Ojos y Labios", sub: "Aplicación de mascara, sombras esenciales y rubor para un look fresco." }
+                        ]
+                    }
+                ],
+                showComplementary: false,
+                infoList: [
+                    "Aprenderás a usar tus propios productos y te recomendaremos los faltantes ideales.",
+                    "Clase práctica dinámica y guiada paso a paso."
+                ]
+            },
+            ponteguapa_medio_personas: {
+                heroTitle: "Ponteguapa Medio",
+                heroSubtitle: "Colorimetría personal y maquillaje social.",
+                heroImage: "assets/3.png",
+                introTitle: "Estilo Inteligente & Color",
+                introDesc1: "Eleva tu estilo personal y domina las combinaciones cromáticas que hacen resaltar tu belleza. Aprende las técnicas de maquillaje social para eventos de día y noche.",
+                introDesc2: "Exploraremos la colorimetría personal (tonos fríos/cálidos) y la organización de tu guardarropa para crear combinaciones elegantes y seguras.",
+                packages: [
+                    {
+                        title: "PONTEGUAPA MEDIO PERSONAS",
+                        subtitle: "Colorimetría & Automaquillaje Social",
+                        desc: "Diseñado para quienes ya conocen lo básico y desean dar un paso más en su estilo.",
+                        price: "Consultar",
+                        includes: [
+                            { main: "Estudio de Colorimetría Personal", sub: "Descubre qué colores iluminan tu rostro en ropa, maquillaje y accesorios." },
+                            { main: "Clóset Cápsula y Estilo Personal", sub: "Cómo armar combinaciones infalibles con pocas prendas clave." },
+                            { main: "Maquillaje Social de Día y de Noche", sub: "Transición rápida de un look fresco a uno más sofisticado." },
+                            { main: "Delineados y Pestañas", sub: "Técnicas de aplicación e intensificación de la mirada para ocasiones especiales." }
+                        ]
+                    }
+                ],
+                showComplementary: false,
+                infoList: [
+                    "Se entrega paleta de colorimetría digital personalizada como material de apoyo.",
+                    "Recomendado para eventos sociales, cenas, citas y reuniones especiales."
+                ]
+            },
+            ponteguapa_avanzado_personas: {
+                heroTitle: "Ponteguapa Avanzado",
+                heroSubtitle: "Visagismo de alta definición y maquillaje glam.",
+                heroImage: "assets/novia-2-1.jpeg",
+                introTitle: "La Experiencia Beauty Definitiva",
+                introDesc1: "Una mentoría avanzada 1 a 1 para dominar las técnicas de maquillaje profesional aplicadas a ti misma, incluyendo contornos avanzados (visagismo) y looks glamorosos de noche.",
+                introDesc2: "Profundizamos en el diseño de estilo personal exclusivo y maquillaje sofisticado de alta duración para que destaques con luz propia.",
+                packages: [
+                    {
+                        title: "PONTEGUAPA AVANZADO PERSONAS",
+                        subtitle: "Visagismo & Automaquillaje Glam",
+                        desc: "Mentoría premium y totalmente personalizada para una transformación integral.",
+                        price: "Consultar",
+                        featured: true,
+                        includes: [
+                            { main: "Visagismo y Correcciones Avanzadas", sub: "Armonización morfológica del rostro mediante contornos y luces." },
+                            { main: "Look Ojos Glam & Smokey Eyes", sub: "Dominio de difuminados complejos, brillos y delineados gráficos o clásicos." },
+                            { main: "Piel de Lujo de Larga Duración", sub: "Blindaje de piel resistente para fiestas y sesiones fotográficas." },
+                            { main: "Estilismo y Curaduría de Guardarropa", sub: "Asesoría completa de prendas de gala y outfits sofisticados para ocasiones especiales." }
+                        ]
+                    }
+                ],
+                showComplementary: false,
+                infoList: [
+                    "Mentoría 100% individual y personalizada según tus rasgos corporales e intereses.",
+                    "Incluye guía digital personalizada de estilo e imagen post-sesión."
+                ]
+            },
+            bridal_curso: {
+                heroTitle: "Bridal Experience",
+                heroSubtitle: "Especialización en Novias Profesional.",
+                heroImage: "assets/novios.jpeg",
+                introTitle: "Especialización Bridal",
+                introDesc1: "Diseñada para dominar el mundo bridal desde una visión profesional, estética y estratégica, esta especialización intensiva te convertirá en una autoridad de la belleza nupcial.",
+                introDesc2: "Aprenderás no solo técnicas de vanguardia de maquillaje y blindaje de larga duración, sino también las bases de la asesoría de imagen y psicología de la novia para ofrecer una experiencia única de lujo.",
+                packages: [
+                    {
+                        title: "ESPECIALIZACIÓN EN NOVIAS",
+                        subtitle: "Domina el mundo bridal",
+                        desc: "Diseñada para dominar el mundo bridal desde una visión profesional, estética y estratégica.",
+                        price: "$1.200.000 COP",
+                        includes: [
+                            { main: "Duración", sub: "Jornada intensiva todo el día." },
+                            { main: "Metodología", sub: "Teoría + Demo + Práctica Personalizada." },
+                            { main: "Bases de asesoría de imagen nupcial", sub: "Comprende la visión y deseos de la novia." },
+                            { main: "Análisis facial y elección del estilo ideal", sub: "Visagismo aplicado a la novia." },
+                            { main: "Novias actuales: soft glam, clean bride y bridal luxury", sub: "Los estilos más demandados y rentables." },
+                            { main: "Blindaje para largas jornadas", sub: "Técnicas infalibles de larga duración." },
+                            { main: "Piel madura y efecto lifting visual", sub: "Técnicas de rejuvenecimiento y frescura." },
+                            { main: "Maquillaje HD y fotografía", sub: "Logra el look perfecto ante el lente." },
+                            { main: "Práctica personalizada", sub: "Adaptada al estilo que más se adapte a ella." }
+                        ]
+                    }
+                ],
+                showComplementary: false,
+                infoList: [
+                    "Especialización incluye: Almuerzo, Refrigerio, Coffee Break, Kit de Apoyo, Certificado de Asistencia, Fotos y contenido para redes 📸",
+                    "Reserva tu cupo: Para asegurar tu cupo, se requiere reserva previa. Se realiza en mi estudio Plazoleta Villa de Aburrá.",
+                    "Forma de pago: 1) Abonas el 40% del valor total del taller ($480.000). 2) El saldo restante ($720.000) se cancela 1 día antes del taller.",
+                    "Cuenta Bancaria: Cuenta Bancolombia No. 01400010974 para transferencias directas."
+                ],
+                faqList: [
+                    { q: "¿Qué incluye la especialización?", a: "Incluye Almuerzo, Refrigerio, Coffee Break, un Kit de Apoyo completo, Certificado físico de Asistencia, y la producción de fotos y contenido de alta calidad para tus redes sociales.", cat: "Servicios Incluidos" },
+                    { q: "¿Dónde se dicta las clases?", a: "Se realizan de forma presencial en mi estudio privado ubicado en la Plazoleta Villa de Aburrá. Las fechas se coordinan de manera personalizada tras la reserva.", cat: "Ubicación" },
+                    { q: "¿Cómo es el proceso de reserva y pago?", a: "Para asegurar tu cupo debes realizar una reserva previa abonando el 40% del valor total ($480.000). El 60% restante ($720.000) se cancela a más tardar un día antes del inicio de las clases. Las transferencias se realizan a la cuenta de Bancolombia No. 01400010974.", cat: "Pagos" },
+                    { q: "¿A quién está dirigida la especialización?", a: "A maquilladores profesionales, estilistas y asesores de imagen que quieran perfeccionar su técnica, aprender dirección de arte nupcial y elevar el valor percibido de sus servicios para liderar el sector bridal.", cat: "Metodología" }
+                ]
+            },
+            glam_skin: {
+                heroTitle: "Glam Skin",
+                heroSubtitle: "El arte de la piel perfecta y maquillaje social.",
+                heroImage: "assets/foto2.jpg",
+                introTitle: "Perfeccionamiento Profesional",
+                introDesc1: "Enfocado en las técnicas más actuales y refinadas de preparación de piel y maquillaje social premium, este taller intensivo de 5 horas te proporcionará el secreto para lograr acabados impecables y duraderos.",
+                introDesc2: "Dirigido a maquilladores que desean elevar la calidad de sus servicios de maquillaje social y posicionarse en un segmento premium de alta rentabilidad.",
+                packages: [
+                    {
+                        title: "PERFECCIONAMIENTO GLAM SKIN",
+                        subtitle: "Piel Perfecta & Social Premium",
+                        desc: "Enfocado en las técnicas más actuales de piel perfecta y maquillaje social premium.",
+                        price: "$650.000 COP",
+                        includes: [
+                            { main: "Duración: 5 horas", sub: "Sesión intensiva teórico-práctica." },
+                            { main: "Metodología", sub: "Teoría + Demo + Práctica Guiada." },
+                            { main: "Preparación avanzada de piel", sub: "Técnicas de skincare profesional." },
+                            { main: "Técnica Glam Skin / Luxury Skin", sub: "Acabado luminoso y pulido." },
+                            { main: "Correcciones estratégicas sin saturar", sub: "Visagismo y armonización natural." },
+                            { main: "Blindaje y duración profesional", sub: "A prueba de agua, sudor y lágrimas." },
+                            { main: "Iluminación y acabado HD", sub: "Maquillaje perfecto para fotografía y video." },
+                            { main: "Tips de fotografía y contenido", sub: "Iluminación y captura para redes sociales." }
+                        ]
+                    }
+                ],
+                showComplementary: false,
+                infoList: [
+                    "Taller incluye: Almuerzo, Refrigerio, Coffee Break, Kit de Apoyo, Certificado de Asistencia, Fotos y contenido para redes 📸",
+                    "Reserva tu cupo: Para asegurar tu cupo, se requiere reserva previa. Se realiza en mi estudio Plazoleta Villa de Aburrá.",
+                    "Forma de pago: 1) Abonas el 40% del valor total del taller ($260.000). 2) El saldo restante ($390.000) se cancela 1 día antes del taller.",
+                    "Cuenta Bancaria: Cuenta Bancolombia No. 01400010974 para transferencias directas."
+                ],
+                faqList: [
+                    { q: "¿Qué incluye el taller?", a: "El taller de perfeccionamiento incluye Almuerzo, Refrigerio, Coffee Break, un Kit de Apoyo completo, Certificado físico de Asistencia, y la producción de fotos y contenido de alta calidad para tus redes sociales.", cat: "Servicios Incluidos" },
+                    { q: "¿Dónde se dicta el taller?", a: "Se realiza de forma presencial en mi estudio privado ubicado en la Plazoleta Villa de Aburrá. Las fechas exactas se coordinan de manera personalizada tras la reserva.", cat: "Ubicación" },
+                    { q: "¿Cómo es el proceso de reserva y pago?", a: "Para asegurar tu cupo debes realizar una reserva previa abonando el 40% del valor total del taller ($260.000). El 60% restante ($390.000) se cancela a más tardar un día antes de la sesión. Las transferencias se realizan a la cuenta de Bancolombia No. 01400010974.", cat: "Pagos" },
+                    { q: "¿Necesito conocimientos previos?", a: "Sí, este taller está recomendado para maquilladores intermedios o avanzados que ya dominan las técnicas básicas y desean especializarse en acabados de piel ultra-lujosos y de larga duración.", cat: "Metodología" }
+                ]
+            }
+        };
+
+        PAGE_DATA.automaquillaje = PAGE_DATA.ponteguapa;
+        PAGE_DATA.novia_glam = PAGE_DATA.bridal_curso;
+        PAGE_DATA.actualizacion_social = PAGE_DATA.glam_skin;
+
+        const App = () => {
+            const [data, setData] = useState(PAGE_DATA.consultoria);
+            const [courseType, setCourseType] = useState('consultoria');
+
+            useEffect(() => {
+                const params = new URLSearchParams(window.location.search);
+                const type = params.get('type');
+                if (type) {
+                    const normalizedType = type.toLowerCase().trim();
+                    if (PAGE_DATA[normalizedType]) {
+                        setData(PAGE_DATA[normalizedType]);
+                        setCourseType(normalizedType);
+                    }
+                }
+            }, []);
+
+            return (
+                <div className="font-poppins antialiased">
+                    <Navbar />
+                    <Hero data={data} />
+                    <MarqueeTicker />
+                    <Intro data={data} />
+                    <Packages data={data} />
+                    <QuoteBanner type={courseType} />
+                    <Complementary data={data} />
+                    <InteractiveFAQ data={data} />
+                    <Footer />
+                    <WhatsAppBtn />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+    
+    <div id="google_translate_element" style="display:none;"></div>
+    <script type="text/javascript">
+        // Destruir por completo la barra superior de Google Translate
+        const observer = new MutationObserver(() => {
+            if (document.body && (document.body.style.top || document.body.style.marginTop)) {
+                document.body.style.top = '0px';
+                document.body.style.marginTop = '0px';
+                document.body.style.position = 'static';
+            }
+            document.querySelectorAll('.skiptranslate').forEach(el => {
+                if (el.tagName === 'DIV' || el.tagName === 'IFRAME') {
+                    el.style.display = 'none';
+                    el.style.opacity = '0';
+                    el.style.height = '0px';
+                }
+            });
+            document.querySelectorAll('.goog-te-banner-frame').forEach(el => {
+                el.style.display = 'none';
+            });
+        });
+        observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+
+        window.googleTranslateElementInit = function() {
+            new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'en,es', autoDisplay: false}, 'google_translate_element');
+        }
+        window.changeLang = function(lang) {
+            var select = document.querySelector(".goog-te-combo");
+            if (select) {
+                select.value = lang;
+                select.dispatchEvent(new Event('change'));
+            }
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
+</body>
+</html>

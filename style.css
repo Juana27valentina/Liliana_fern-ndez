@@ -166,6 +166,30 @@ img {
 }
 
 /* ==========================================================================
+   Animations & Transitions
+   ========================================================================== */
+.fade-in {
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.slide-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.appear {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }
+
+/* ==========================================================================
    Navigation
    ========================================================================== */
 #navbar {
@@ -396,27 +420,632 @@ img {
     align-self: center;
 }
 
+/* ==========================================================================
+   Cursos Section Styles
+   ========================================================================== */
+/* Cursos Filter Bar Styling */
+.cursos-filter-bar {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background-color: transparent;
+    border: 1.5px solid rgba(44, 44, 44, 0.1);
+    color: var(--dark);
+    padding: 0.7rem 1.8rem;
+    font-family: var(--font-text);
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.filter-btn.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 6px 15px rgba(212, 163, 115, 0.3);
+}
+
+.cursos-layout.filter-belleza {
+    grid-template-columns: 1fr !important;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cursos-layout.filter-magia {
+    grid-template-columns: 1fr !important;
+    max-width: 1200px !important;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.cursos-layout.filter-magia .curso-col-right {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+}
+
+@media screen and (max-width: 991px) {
+    .cursos-layout.filter-magia .curso-col-right {
+        flex-direction: column;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
 .cursos-layout {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
+    align-items: stretch;
 }
 
+.curso-col-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.curso-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* ==========================================================================
+   Horizontal Accordion Layout
+   ========================================================================== */
+.cursos-accordion {
+    display: flex;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    height: 500px;
+    gap: 0;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    margin-top: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.cursos-accordion.filtered-mode {
+    width: 100%;
+    margin-left: 0;
+    border-radius: 15px;
+}
+
+@media screen and (max-width: 992px) {
+    .cursos-accordion {
+        height: 400px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .cursos-accordion {
+        flex-direction: column;
+        height: 700px; /* Tall vertical accordion */
+    }
+}
+
+.accordion-item {
+    position: relative;
+    flex: 1; /* Collapsed state */
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+    background: var(--primary); /* Brand color instead of black */
+    border-right: 1px solid rgba(255, 255, 255, 0.4);
+}
+.accordion-item:last-child {
+    border-right: none;
+}
+
+
+/* Expanded state on hover (desktop) and active */
+@media screen and (min-width: 769px) {
+    .accordion-item:hover, .accordion-item.active {
+        flex: 6;
+    }
+}
+@media screen and (max-width: 768px) {
+    .accordion-item.active {
+        flex: 5;
+    }
+}
+
+/* Background Image with Black/White effect when collapsed */
+.accordion-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.accordion-item:hover .accordion-bg, 
+.accordion-item.active .accordion-bg {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.accordion-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+}
+
+.accordion-item:hover .accordion-overlay,
+.accordion-item.active .accordion-overlay {
+    opacity: 1;
+}
+
+/* Vertical Title for Collapsed State */
+.accordion-title-vertical {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+    writing-mode: vertical-rl;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    z-index: 2;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+}
+@media screen and (max-width: 768px) {
+    .accordion-title-vertical {
+        bottom: 50%;
+        left: 20px;
+        transform: translateY(50%); /* horizontal text on mobile collapsed */
+    }
+}
+
+.accordion-item:hover .accordion-title-vertical,
+.accordion-item.active .accordion-title-vertical {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Content for Expanded State */
+.accordion-content {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    right: 50px;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.accordion-item:hover .accordion-content,
+.accordion-item.active .accordion-content {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition-delay: 0.15s;
+}
+
+.accordion-content .curso-tag {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9), 0px 0px 10px rgba(0, 0, 0, 0.6);
+}
+
+.accordion-content h3 {
+    font-size: 2.5rem;
+    margin-bottom: 1.2rem;
+    color: #fff;
+    font-family: var(--font-heading);
+}
+
+.accordion-content p {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.9);
+    max-width: 500px;
+}
+
+.accordion-content .btn-curso {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+.accordion-content .btn-curso:hover {
+    background: #fff;
+    color: #000;
+}
+
+.accordion-item.hidden-filter {
+    display: none !important;
+}
+
+.curso-footer {
+    border-top: 1px solid rgba(212, 163, 115, 0.2);
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.curso-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-main);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.curso-info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.curso-info-item svg {
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.btn-curso {
+    display: inline-block;
+    text-align: center;
+    padding: 0.75rem 1.2rem;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-curso-gold {
+    background-color: var(--primary);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 10px rgba(212, 163, 115, 0.3);
+}
+
+.btn-curso-gold:hover {
+    background-color: #c39262;
+    transform: translateY(-2px);
+    color: #ffffff;
+}
+
+.btn-curso-outline {
+    background-color: transparent;
+    color: var(--dark);
+    border: 1.5px solid var(--dark);
+}
+
+.btn-curso-outline:hover {
+    background-color: var(--dark);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Ensure secondary cards inside the right column stretch and are centered properly */
+.curso-col-right .service-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Custom styles for Dark Course Card */
+.curso-card-dark {
+    background-color: #3d2b1f !important; /* Elegant warm luxury chocolate brown */
+    color: #ffffff !important;
+    border: 1px solid rgba(212, 163, 115, 0.18) !important;
+    box-shadow: 0 15px 35px rgba(61, 43, 31, 0.15), var(--shadow) !important;
+}
+
+.curso-card-dark h3 {
+    color: var(--primary) !important; /* gold/beige title */
+    font-size: 1.6rem;
+}
+
+.curso-card-dark p {
+    color: #e0e0e0 !important;
+    font-size: 0.95rem;
+}
+
+/* Custom styles for Light Course Card */
+.curso-card-light {
+    background-color: #ffffff !important;
+    color: var(--text-main) !important;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: var(--shadow) !important;
+}
+
+.curso-card-light h3 {
+    color: var(--dark) !important;
+    font-size: 1.6rem;
+}
+
+.curso-card-light p {
+    color: var(--text-main) !important;
+    font-size: 0.95rem;
+}
+
+/* Meta details styling (duration, methodology) */
+.curso-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 1.2rem 0;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.curso-card-dark .meta-item {
+    color: var(--primary); /* Gold color for dark card meta text/icons */
+}
+
+.curso-card-dark .meta-item span {
+    color: #e0e0e0;
+}
+
+.curso-card-light .meta-item,
+.curso-main .meta-item {
+    color: var(--primary); /* Gold color for light/main card meta icons */
+}
+
+.curso-card-light .meta-item span,
+.curso-main .meta-item span {
+    color: var(--text-main);
+}
+
+/* Bullet list features list styling */
+.curso-features-list {
+    text-align: left;
+    margin: 1.2rem auto;
+    padding-left: 0;
+    list-style: none;
+    max-width: 320px; /* Centers the list layout while keeping bullets left-aligned */
+}
+
+.curso-features-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.curso-card-dark .curso-features-list li {
+    color: #e0e0e0;
+}
+
+.curso-card-light .curso-features-list li,
+.curso-main .curso-features-list li {
+    color: var(--text-main);
+}
+
+.curso-features-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary); /* Gold bullet points */
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* Custom details for Esenciales Card */
+.curso-tag {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    font-family: var(--font-text);
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9), 0px 0px 10px rgba(0, 0, 0, 0.6);
+}
+
+.curso-subtitle {
+    font-size: 1.05rem;
+    font-family: var(--font-text);
+    font-weight: 500;
+    color: var(--text-light);
+    margin-top: -0.4rem;
+    margin-bottom: 1.2rem;
+}
+
+.curso-check-list {
+    text-align: left;
+    margin: 1.2rem auto;
+    padding-left: 0;
+    list-style: none;
+    max-width: 320px; /* centers list visually */
+}
+
+.curso-check-list li {
+    margin-bottom: 0.7rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    color: var(--text-main);
+    font-family: var(--font-text);
+    font-weight: 400;
+}
+
+.curso-check-list svg {
+    color: var(--primary);
+    flex-shrink: 0;
+    margin-right: 12px;
+}
+
+.curso-info-note {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background-color: rgba(212, 163, 115, 0.07);
+    border: 1px solid rgba(212, 163, 115, 0.15);
+    border-radius: 12px;
+    padding: 0.8rem 1.2rem;
+    margin: 1.5rem auto;
+    max-width: 380px;
+    text-align: left;
+    font-size: 0.85rem;
+    color: #8c7355;
+    line-height: 1.4;
+}
+
+.curso-info-note svg {
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+/* Main course card left image size adjustment on desktop */
+.curso-main .service-img {
+    height: 250px;
+}
+
+/* Custom Premium Buttons for Courses */
+.btn-curso-solid,
+.btn-curso-outline-gold,
+.btn-curso-outline-dark {
+    display: inline-block;
+    padding: 0.9rem 2.2rem;
+    font-family: var(--font-text);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.85rem;
+    border-radius: 30px;
+    transition: var(--transition);
+    cursor: pointer;
+    text-align: center;
+    align-self: center;
+    margin-top: auto;
+    width: max-content;
+}
+
+/* Solid Button: Gold/Beige */
+.btn-curso-solid {
+    background-color: var(--primary);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 8px 20px rgba(212, 163, 115, 0.35);
+}
+
+.btn-curso-solid:hover {
+    background-color: #c39262;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(212, 163, 115, 0.5);
+    color: #ffffff;
+}
+
+/* Outline Gold Button */
+.btn-curso-outline-gold {
+    background-color: transparent;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+}
+
+.btn-curso-outline-gold:hover {
+    background-color: var(--primary);
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(212, 163, 115, 0.3);
+}
+
+/* Outline Dark Button */
+.btn-curso-outline-dark {
+    background-color: transparent;
+    color: var(--dark);
+    border: 1.5px solid var(--dark);
+}
+
+.btn-curso-outline-dark:hover {
+    background-color: var(--dark);
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(44, 44, 44, 0.2);
+}
+
+/* Responsive layouts */
 @media screen and (min-width: 992px) {
     .cursos-layout {
-        grid-template-columns: 1.2fr 1fr;
-        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1.1fr 0.9fr; /* Left col slightly wider */
+        gap: 2.5rem;
     }
-
-    .curso-main {
-        grid-row: span 2;
-    }
-
     .curso-main .service-img {
-        flex-grow: 1;
-        height: auto;
-        min-height: 250px;
-        max-height: 350px;
+        height: 390px; /* Tall beautiful portrait image */
+    }
+    .curso-col-right {
+        gap: 2.5rem;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .cursos-layout {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    .curso-main .service-img {
+        height: 280px;
     }
 }
 
@@ -601,112 +1230,149 @@ img {
 
 .contact-header-new p a {
     text-decoration: underline;
+    color: var(--primary);
 }
 
 .contact-header-new h2 {
-    font-size: 2.2rem;
-    font-weight: 400;
+    font-size: 2.5rem;
+    font-weight: 500;
     line-height: 1.3;
     font-family: var(--font-heading);
     color: var(--dark);
-    text-transform: uppercase;
+    text-transform: none;
+}
+
+.contact-header-new h2 .accent-title {
+    font-style: italic;
+    color: var(--primary);
+    font-weight: 400;
 }
 
 .contact-wrapper-new {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr;
     gap: 4rem;
     padding-bottom: 6rem;
 }
 
+@media screen and (min-width: 768px) {
+    .contact-wrapper-new {
+        grid-template-columns: 1fr 2fr;
+    }
+}
+
 .contact-info-new .info-block {
-    margin-bottom: 2rem;
+    margin-bottom: 2.2rem;
 }
 
 .info-block h4 {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-family: var(--font-text);
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 0.5rem;
-    color: var(--dark);
+    margin-bottom: 0.6rem;
+    color: var(--primary);
     font-weight: 600;
 }
 
 .info-block p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--text-main);
     line-height: 1.6;
 }
 
 .social-icons {
     display: flex;
-    gap: 1rem;
-    margin-top: 0.5rem;
+    gap: 1.2rem;
+    margin-top: 0.8rem;
 }
 
 .social-icons a {
     font-size: 0.8rem;
     font-weight: 600;
-    border-bottom: 1px solid var(--dark);
-    padding-bottom: 2px;
+    color: var(--dark);
+    border-bottom: 1.5px solid var(--dark);
+    padding-bottom: 3px;
+    transition: var(--transition);
+}
+
+.social-icons a:hover {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
 }
 
 .contact-form-new {
     position: relative;
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
-    padding-left: 4rem;
+}
+
+@media screen and (min-width: 768px) {
+    .contact-form-new {
+        border-left: 1px solid rgba(0, 0, 0, 0.08);
+        padding-left: 4rem;
+    }
 }
 
 .form-group-new {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
 }
 
 .form-group-new input,
 .form-group-new textarea {
     width: 100%;
-    padding: 1rem;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 0;
+    padding: 0.9rem 1.2rem;
+    border: 1.5px solid rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
     font-family: var(--font-text);
     font-size: 0.85rem;
     background-color: transparent;
+    color: var(--dark);
     transition: var(--transition);
+    letter-spacing: 1px;
+}
+
+.form-group-new input::placeholder,
+.form-group-new textarea::placeholder {
+    color: #9e9890;
     letter-spacing: 1px;
 }
 
 .form-group-new input:focus,
 .form-group-new textarea:focus {
     outline: none;
-    border-color: var(--dark);
-    background-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--primary);
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.08);
 }
 
 .btn-submit-new {
-    background-color: #b8a696;
-    color: #fff;
+    background-color: var(--primary);
+    color: #ffffff;
     border: none;
-    padding: 1rem 2.5rem;
+    padding: 1.1rem 3rem;
     border-radius: 30px;
     font-family: var(--font-text);
-    font-weight: 500;
-    letter-spacing: 1px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
     cursor: pointer;
     transition: var(--transition);
     text-transform: uppercase;
     font-size: 0.85rem;
     margin-top: 1rem;
+    display: inline-block;
+    box-shadow: 0 5px 15px rgba(212, 163, 115, 0.3);
 }
 
 .btn-submit-new:hover {
-    background-color: #9e8e7f;
+    background-color: #c39262;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 163, 115, 0.45);
 }
 
 /* ==========================================================================
    Footer (New)
    ========================================================================== */
 .site-footer {
-    background-color: #f6f5f2;
+    background-color: #ffffff;
     color: var(--dark);
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     padding-top: 2rem;
@@ -871,23 +1537,90 @@ img {
 
 @media screen and (max-width: 768px) {
     .nav-links {
-        position: absolute;
-        right: 0px;
-        height: 100vh;
+        position: fixed;
+        left: 0;
         top: 0;
-        background-color: var(--light);
+        width: 100%;
+        height: 100vh;
+        padding: 0;
+        background: var(--light);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-top: none;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 100%;
-        transform: translateX(100%);
-        transition: transform 0.5s ease-in;
-        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        gap: 1.8rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease-in-out;
+        box-shadow: none;
+        z-index: 999;
     }
 
     .nav-links.nav-active {
-        transform: translateX(0%);
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .logo {
+        position: relative;
+        z-index: 1001;
+    }
+
+    .nav-links li a {
+        font-family: var(--font-text);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--dark);
+        font-weight: 500;
+    }
+
+    .nav-links li a.btn-nav {
+        font-size: 0.75rem;
+        padding: 0.8rem 2rem;
+        letter-spacing: 1px;
+    }
+
+    body #navbar .nav-links .lang-dropdown-btn,
+    body #navbar:not(.scrolled) .nav-links .lang-dropdown-btn,
+    body #navbar.scrolled .nav-links .lang-dropdown-btn,
+    body nav .lang-dropdown-btn {
+        background: rgba(255, 255, 255, 0.5) !important;
+        border: 1px solid rgba(0, 0, 0, 0.15) !important;
+        color: var(--dark) !important;
+        margin: 0 auto;
+        padding: 8px 16px;
+    }
+
+    body #navbar .nav-links .lang-dropdown-btn svg,
+    body #navbar:not(.scrolled) .nav-links .lang-dropdown-btn svg,
+    body #navbar.scrolled .nav-links .lang-dropdown-btn svg,
+    body nav .lang-dropdown-btn svg {
+        stroke: var(--dark) !important;
+    }
+
+    .lang-dropdown-menu {
+        position: relative;
+        top: 0;
+        width: auto;
+        min-width: 140px;
+        box-shadow: none;
+        background: transparent;
+        border: none;
+        margin-top: 10px;
+        display: none; /* hidden by default on mobile until toggled */
+    }
+
+    .lang-dropdown-container.active .lang-dropdown-menu {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
     }
 
     .hamburger {
@@ -994,40 +1727,47 @@ img {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    width: 45px;
-    height: 45px;
+    background: #ffffff;
+    color: var(--dark);
+    border: 1px solid rgba(0,0,0,0.05);
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     cursor: pointer;
     transition: var(--transition);
     z-index: 10;
-    box-shadow: 0 4px 10px rgba(212, 163, 115, 0.4);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .carousel-btn:hover {
-    background: #b88655;
+    background: var(--primary);
+    color: #ffffff;
     transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 15px 35px rgba(212, 163, 115, 0.3);
 }
 
 .prev-btn {
-    left: 0;
+    left: -10px;
 }
 
 .next-btn {
-    right: 0;
+    right: -10px;
 }
 
-.masonry-col img {
+.masonry-col img,
+.masonry-col video {
     width: 100%;
     object-fit: cover;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     transition: transform 0.4s ease;
 }
 
-.masonry-col img:hover {
+.masonry-col img:hover,
+.masonry-col video:hover {
     transform: translateY(-5px);
 }
 
@@ -3695,5 +4435,278 @@ body {
 }
 
 iframe.goog-te-banner-frame {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Cursos Section: Checklist & Info Note
+   ========================================================================== */
+.curso-check-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.8rem auto;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+}
+
+.curso-check-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1.5px solid rgba(212, 163, 115, 0.12);
+    font-family: var(--font-text);
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--dark);
+    text-align: left;
+}
+
+.curso-check-list li:last-child {
+    border-bottom: none;
+}
+
+.curso-check-list svg {
+    flex-shrink: 0;
+}
+
+.curso-info-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background-color: rgba(212, 163, 115, 0.05);
+    border: 1px solid rgba(212, 163, 115, 0.18);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 1.5rem auto;
+    max-width: 320px;
+    text-align: left;
+}
+
+.curso-info-note svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.curso-info-note span {
+    font-family: var(--font-text);
+    font-size: 0.8rem;
+    color: #6a4f3b;
+    line-height: 1.45;
+    font-weight: 400;
+}
+
+/* ==========================================================================
+   Secondary Course Cards Split Layout Styles (50/50)
+   ========================================================================== */
+.curso-col-right .service-card {
+    flex: 1;
+    display: flex;
+    flex-direction: row; /* Desktop horizontal split display */
+    align-items: stretch; /* Stretch image to full height of card */
+    justify-content: space-between;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.curso-col-right .service-card .service-info {
+    flex: 1.1;
+    padding: 2.5rem 2.8rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.curso-col-right .service-card .service-info h3 {
+    margin-bottom: 0.8rem;
+    font-size: 1.5rem;
+}
+
+.curso-col-right .service-card .service-info p {
+    margin-bottom: 0;
+}
+
+.curso-col-right .curso-meta {
+    align-items: flex-start;
+    margin: 0.6rem 0 1rem 0;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.curso-col-right .meta-item {
+    justify-content: flex-start;
+}
+
+.curso-col-right .curso-card-img {
+    flex: 0.9;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--primary-light);
+}
+
+.curso-col-right .curso-card-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.curso-col-right .service-card:hover .curso-card-img img {
+    transform: scale(1.06);
+}
+
+/* Responsive adjustment for right column cards */
+@media screen and (max-width: 1100px) {
+    .curso-col-right .service-card .service-info {
+        padding: 2rem 2.2rem;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .curso-col-right .service-card .service-info {
+        padding: 1.8rem 2rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .curso-col-right .service-card {
+        flex-direction: column-reverse; /* image top, text bottom */
+        padding: 0;
+        gap: 0;
+    }
+
+    .curso-col-right .service-card .service-info {
+        padding: 2.2rem 2rem;
+        text-align: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .curso-col-right .curso-meta {
+        align-items: center;
+    }
+
+    .curso-col-right .meta-item {
+        justify-content: center;
+    }
+
+    .curso-col-right .curso-card-img {
+        width: 100%;
+        height: 220px;
+        flex: none;
+    }
+    
+    .curso-col-right .curso-card-img img {
+        position: relative;
+        height: 100%;
+    }
+}
+
+/* ==========================================================================
+   Consultoría Main Card (Left Column) Premium Refinements
+   ========================================================================== */
+.curso-main {
+    border: 1px solid rgba(212, 163, 115, 0.15) !important;
+    box-shadow: 0 15px 40px rgba(212, 163, 115, 0.05), var(--shadow) !important;
+    background: #ffffff;
+    transition: var(--transition);
+}
+
+.curso-main:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(212, 163, 115, 0.1), var(--shadow) !important;
+}
+
+.curso-main .service-info {
+    padding: 2.5rem 2.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.curso-main .service-info h3 {
+    font-size: 1.85rem;
+    font-family: var(--font-heading);
+    color: var(--dark);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.curso-main .service-info p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-main);
+    max-width: 520px;
+    margin: 0 auto 1.2rem auto;
+    font-weight: 300;
+}
+
+/* Style meta info as a luxury capsule badge */
+.curso-main .curso-meta {
+    margin: 0.8rem auto 1.6rem auto;
+    background-color: rgba(212, 163, 115, 0.05);
+    border: 1px solid rgba(212, 163, 115, 0.18);
+    border-radius: 30px;
+    padding: 8px 20px;
+    width: max-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(212, 163, 115, 0.04);
+}
+
+.curso-main .meta-item {
+    margin: 0;
+    gap: 8px;
+    color: #6a4f3b;
+    font-weight: 500;
+    font-size: 0.86rem;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+}
+
+.curso-main .meta-item svg {
+    color: var(--primary);
+    stroke-width: 2.2px;
+}
+
+.curso-main .btn-curso-solid {
+    margin: 0 auto;
+    display: block;
+    width: max-content;
+}
+
+/* ==========================================================================
+   Unified Clean Styles (Refactoring from inline styles)
+   ========================================================================== */
+.flag-icon {
+    font-size: 1.2rem;
+}
+.delay-100 {
+    transition-delay: 0.1s !important;
+}
+.delay-200 {
+    transition-delay: 0.2s !important;
+}
+.meta-item svg {
+    vertical-align: middle;
+    margin-right: 6px;
+}
+.subscribe-form .btn-submit-new {
+    margin-top: 1rem;
+    width: max-content;
+}
+#google_translate_element {
     display: none !important;
 }

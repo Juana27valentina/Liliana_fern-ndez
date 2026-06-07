@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lili | Professional Makeup Artist</title>
-    <meta name="description" content="Lili - Maquilladora profesional. Maquillaje para novias, eventos sociales y clases de automaquillaje.">
+    <meta name="description"
+        content="Lili - Maquilladora profesional. Maquillaje para novias, eventos sociales y clases de automaquillaje.">
     <meta property="og:title" content="Lili | Professional Makeup Artist">
-    <meta property="og:description" content="Lili - Maquilladora profesional. Maquillaje para novias, eventos sociales y clases de automaquillaje.">
+    <meta property="og:description"
+        content="Lili - Maquilladora profesional. Maquillaje para novias, eventos sociales y clases de automaquillaje.">
     <meta property="og:image" content="assets/lili.jpg">
     <meta property="og:url" content="https://lili-makeup.com">
     <meta name="theme-color" content="#d4a373">
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="assets/logo_lili.png" as="image">
+    <link rel="dns-prefetch" href="https://translate.google.com">
     <link rel="stylesheet" href="style.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" 
-    crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
 
     <!-- Navigation -->
@@ -27,20 +35,32 @@
             </a>
             <ul class="nav-links">
                 <li><a href="#hero">Inicio</a></li>
+                <li><a href="#about">Sobre Mí</a></li>
                 <li><a href="#services">Servicios</a></li>
                 <li><a href="#portfolio">Portafolio</a></li>
                 <li><a href="#cursos">Cursos</a></li>
-                <li><a href="#about">Sobre Mí</a></li>
-                <li><a href="reserva.html" class="btn-nav">Reserva</a></li>
+
+                <li><a href="reserva.html" class="btn-nav">Reservar</a></li>
                 <li class="lang-dropdown-container">
                     <button class="lang-dropdown-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
                         <span>Idioma</span>
-                        <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
                     </button>
                     <ul class="lang-dropdown-menu">
-                        <li onclick="changeLang('es')"><span style="font-size:1.2rem;">🇪🇸</span> Español</li>
-                        <li onclick="changeLang('en')"><span style="font-size:1.2rem;">🇺🇸</span> English</li>
+                        <li onclick="changeLang('es')"><span class="flag-icon">🇪🇸</span> Español</li>
+                        <li onclick="changeLang('en')"><span class="flag-icon">🇺🇸</span> English</li>
                     </ul>
                 </li>
             </ul>
@@ -62,6 +82,31 @@
         </div>
     </section>
 
+    <!-- About Section -->
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="about-wrapper">
+                <div class="about-img fade-in">
+                    <div class="about-img-inner">
+                        <img src="assets/lili.jpg" alt="Lili Maquilladora" loading="lazy">
+                        <div class="shape shape-top-left"></div>
+                        <div class="shape shape-bottom-right"></div>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h2>Sobre Mí</h2>
+                    <h3>Hola, soy Lili</h3>
+                    <p>Soy una maquilladora profesional apasionada por el arte de resaltar la belleza única de cada
+                        persona. Con más de 20 años de experiencia en la industria, me he especializado en maquillaje
+                        para novias y editoriales.</p>
+                    <p>Mi filosofía es que el maquillaje no debe enmascarar quién eres, sino celebrar tu esencia y darte
+                        la confianza para brillar en cualquier ocasión.</p>
+                    <a href="#contact" class="btn-outline">Contáctame</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Services Section -->
     <section id="services" class="section-padding">
         <div class="container">
@@ -69,81 +114,43 @@
                 <h2>Mis Servicios</h2>
                 <p>Opciones personalizadas para cada ocasión especial.</p>
             </div>
-            
+
             <div class="services-grid">
                 <div class="service-card slide-up">
                     <div class="service-img">
-                        <img src="./assets/social.png" alt="Maquillaje Social" loading="lazy">
+                        <img src="assets/socialllll.png" alt="Maquillaje Social" loading="lazy">
                     </div>
                     <div class="service-info">
                         <h3>Experiencia Social</h3>
-                        <p>Perfecto para graduaciones, fiestas, fotografía y eventos especiales. Resalta tus facciones con un look glamoroso y sofisticado.</p>
-                         <a href="detalles-servicio.html?type=social" class="btn-outline">Ver Detalles</a>
+                        <p>Perfecto para graduaciones, fiestas, fotografía y eventos especiales. Resalta tus facciones
+                            con un look glamoroso y sofisticado.</p>
+                        <a href="detalles-servicio.html?type=social" class="btn-outline">Ver Detalles</a>
                     </div>
                 </div>
 
-                <div class="service-card featured-service slide-up" style="transition-delay: 0.1s;">
+                <div class="service-card featured-service slide-up delay-100">
                     <div class="service-img">
                         <img src="./assets/foto2.jpg" alt="Maquillaje para Novias" loading="lazy">
                     </div>
                     <div class="service-info">
                         <h3>Experiencia Novias y Novios</h3>
-                        <p>Luce radiante en el día más importante de tu vida con un maquillaje de larga duración, resistente al agua y diseñado especialmente para ti.</p>
+                        <p>Luce radiante en el día más importante de tu vida con un maquillaje de larga duración,
+                            resistente al agua y diseñado especialmente para ti.</p>
                         <br>
-                         <a href="detalles-servicio.html?type=novias" class="btn-primary">Ver Detalles</a>
+                        <a href="detalles-servicio.html?type=novias" class="btn-primary">Ver Detalles</a>
                     </div>
                 </div>
 
-                <div class="service-card slide-up" style="transition-delay: 0.2s;">
+                <div class="service-card slide-up delay-200">
                     <div class="service-img">
-                        <img src="assets/Quince años-El momento de renacer..png" alt="Experiencia 15 Años" loading="lazy">
+                        <img src="assets/Quince años-El momento de renacer..png" alt="Experiencia 15 Años"
+                            loading="lazy">
                     </div>
                     <div class="service-info">
                         <h3>Experiencia 15 Años</h3>
-                        <p>Descubre el look perfecto para tu día soñado. Un maquillaje fresco, duradero y juvenil para resaltar tu belleza en esta fecha tan especial.</p>
-                         <a href="detalles-servicio.html?type=15" class="btn-outline">Ver Detalles</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Cursos Section -->
-    <section id="cursos" class="section-padding bg-light">
-        <div class="container">
-            <div class="section-header">
-                <h2>Cursos de Maquillaje </h2>
-                <p>Aprende de la mano de una profesional.</p>
-            </div>
-            
-            <div class="cursos-layout">
-                <!-- Curso Principal (Izquierda) -->
-                <div class="service-card curso-main slide-up">
-                    <div class="service-img">
-                        <img src="assets/foto3.jpg" alt="Consultoría de Imagen & Styling" loading="lazy">
-                    </div>
-                    <div class="service-info">
-                        <h3>Consultoría de Imagen & Styling</h3>
-                        <p>Transforma tu presencia con nuestra asesoría integral premium. Descubre tu paleta de colores ideal, define tu estilo personal y domina las técnicas para proyectar tu mejor versión con total seguridad y elegancia.</p>
-                        <a href="detalles-servicio.html" class="btn-primary">Reservar Asesoría</a>
-                    </div>
-                </div>
-
-                <!-- Curso Secundario 1 (Arriba Derecha) -->
-                <div class="service-card slide-up bg-dark" style="transition-delay: 0.1s; background-color: var(--dark); color: white;">
-                    <div class="service-info" style="justify-content: center;">
-                        <h3 style="color: white; font-size: 1.6rem;">Masterclass de Automaquillaje</h3>
-                        <p style="color: #e0e0e0; font-size: 0.95rem;">Aprende a destacar tus facciones, qué productos te favorecen y las técnicas correctas para un look impecable. Ideal para perfeccionar tu estilo diario.</p>
-                        <a href="detalles-servicio.html" class="btn-outline" style="border-color: var(--primary); color: var(--primary);">Más Información</a>
-                    </div>
-                </div>
-
-                <!-- Curso Secundario 2 (Abajo Derecha) -->
-                <div class="service-card slide-up" style="transition-delay: 0.2s; background-color:#fff;">
-                    <div class="service-info" style="justify-content: center;">
-                        <h3 style="font-size: 1.6rem;">Especialización Bridal</h3>
-                        <p style="font-size: 0.95rem;">Curso avanzado diseñado para profesionales. Aprenderás preparación de piel, larga duración, fotografía y las tendencias actuales en novias.</p>
-                        <a href="detalles-servicio.html" class="btn-outline" style="border-color: var(--dark); color: var(--dark);">Más Información</a>
+                        <p>Descubre el look perfecto para tu día soñado. Un maquillaje fresco, duradero y juvenil para
+                            resaltar tu belleza en esta fecha tan especial.</p>
+                        <a href="detalles-servicio.html?type=15" class="btn-outline">Ver Detalles</a>
                     </div>
                 </div>
             </div>
@@ -161,32 +168,65 @@
             <div class="carousel-wrapper fade-in">
                 <div class="carousel-container">
                     <div class="carousel-track">
-                        <!-- Slide 1: Full -->
+                        <!-- SOCIAL SECTION -->
+                        <!-- Slide 1: Full Video -->
+                        <div class="carousel-slide masonry-col">
+                            <video src="assets/social-video.mp4" class="img-full leaf-all" autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <!-- Slide 2: Stacked Half Videos -->
+                        <div class="carousel-slide masonry-col">
+                            <video src="assets/labios-social.mp4" class="img-half leaf-all" autoplay muted loop
+                                playsinline></video>
+                            <video src="assets/ojos-social.mp4" class="img-half leaf-all" autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <!-- Slide 3: Full Image -->
+                        <div class="carousel-slide masonry-col">
+                            <img src="assets/social-3.png" alt="Social" class="img-full leaf-all" loading="lazy">
+                        </div>
+                        <!-- Slide 4: Stacked Half Images -->
+                        <div class="carousel-slide masonry-col">
+                            <img src="assets/social-2.jpeg" alt="Detalle" class="img-half leaf-all">
+                            <img src="assets/social.png" alt="Rostro" class="img-half leaf-all">
+                        </div>
+                        <!-- Slide 5: Full Image -->
+                        <div class="carousel-slide masonry-col">
+                            <img src="assets/socialllll.png" alt="Social" class="img-full leaf-all" loading="lazy">
+                        </div>
+
+                        <!-- NOVIAS SECTION -->
+                        <!-- Slide 6: Full Image -->
                         <div class="carousel-slide masonry-col">
                             <img src="assets/novia2-2.jpeg" alt="Novia" class="img-full leaf-all" loading="lazy">
                         </div>
-                        <!-- Slide 2: Stacked Half -->
+                        <!-- Slide 7: Stacked Half Images -->
                         <div class="carousel-slide masonry-col">
                             <img src="assets/foto2.jpg" alt="Detalle" class="img-half leaf-all" loading="lazy">
                             <img src="assets/novios.jpeg" alt="Rostro" class="img-half leaf-all" loading="lazy">
                         </div>
-                        <!-- Slide 3: Full -->
+                        <!-- Slide 8: Full Image -->
                         <div class="carousel-slide masonry-col">
                             <img src="assets/novia-exterior.jpeg" alt="Novia" class="img-full leaf-all" loading="lazy">
                         </div>
-                        <!-- Slide 4: Stacked Half -->
+                        <!-- Slide 9: Stacked Half Images -->
                         <div class="carousel-slide masonry-col">
-                            <img src="assets/novia-crespos.png" alt="Detalle" class="img-half leaf-all" loading="lazy">
-                            <img src="assets/novia-2-1.jpeg" alt="Rostro" class="img-half leaf-all" loading="lazy">
+                            <img src="assets/novia-social.png" alt="Detalle" class="img-half leaf-all" loading="lazy">
+                            <img src="assets/novia-sonriendo.jpeg" alt="Rostro" class="img-half leaf-all"
+                                loading="lazy">
                         </div>
-                        <!-- Slide 5: Full -->
+
+                        <!-- 15 AÑOS SECTION -->
+                        <!-- Slide 10: Stacked Half Images -->
                         <div class="carousel-slide masonry-col">
-                            <img src="assets/3.png" alt="Novia" class="img-full leaf-all" loading="lazy">
+                            <img src="assets/años.jpeg" alt="Detalle" class="img-half leaf-all">
+                            <img src="assets/Quince años-El momento de renacer..png" alt="Rostro"
+                                class="img-half leaf-all">
                         </div>
-                        <!-- Slide 6: Stacked Half -->
+                        <!-- Slide 11: Stacked Half Video and Image -->
                         <div class="carousel-slide masonry-col">
-                            <img src="assets/social-frente.png" alt="Detalle" class="img-half leaf-all">
-                            <img src="assets/social.png" alt="Rostro" class="img-half leaf-all">
+                            <img src="assets/3.png" class="img-half leaf-all" autoplay muted loop playsinline>
+                            <img src="assets/social-5.png" alt="15 Años" class="img-half leaf-all">
                         </div>
                     </div>
                 </div>
@@ -196,34 +236,178 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="section-padding">
+    <!-- Cursos Section (Bento Box Design) -->
+    <section id="cursos" class="section-padding bg-light">
         <div class="container">
-            <div class="about-wrapper">
-                <div class="about-img fade-in">
-                    <div class="about-img-inner">
-                        <img src="assets/lili.jpg" alt="Lili Maquilladora" loading="lazy">
-                        <div class="shape shape-top-left"></div>
-                        <div class="shape shape-bottom-right"></div>
+            <div class="section-header">
+                <h2>Cursos de Maquillaje</h2>
+                <p>Aprende de la mano de una profesional con nuestra nueva experiencia interactiva.</p>
+            </div>
+
+            <!-- Cursos Filter Bar -->
+            <div class="cursos-filter-bar slide-up">
+                <button class="filter-btn active" data-filter="all">Descubre Todos</button>
+                <button class="filter-btn" data-filter="empresas">Potencia tu Equipo</button>
+                <button class="filter-btn" data-filter="personas">Amor Propio</button>
+                <button class="filter-btn" data-filter="profesionales">Masterclass</button>
+            </div>
+
+            <div class="cursos-accordion slide-up" id="cursosAccordion">
+                <!-- 1: Básico Empresas -->
+                <div class="accordion-item empresas active">
+                    <img class="accordion-bg" src="assets/social.png" alt="Ponte Guapa Fundamentos" loading="lazy">
+                    <div class="accordion-overlay"></div>
+                    <div class="accordion-title-vertical">Ponte Guapa: Fundamentos</div>
+                    <div class="accordion-content">
+                        <span class="curso-tag">Corporativo</span>
+                        <h3>Ponte Guapa: Fundamentos</h3>
+                        <p>Imagen profesional y cuidado de la piel corporativo para el día a día en la oficina.</p>
+                        <a href="detalles-curso.html?type=ponteguapa_basico_empresas"
+                            class="btn-curso btn-curso-outline">Ver Más</a>
                     </div>
                 </div>
-                <div class="about-text">
-                    <h2>Sobre Mí</h2>
-                    <h3>Hola, soy Lili</h3>
-                    <p>Soy una maquilladora profesional apasionada por el arte de resaltar la belleza única de cada persona. Con más de 20 años de experiencia en la industria, me he especializado en maquillaje para novias y editoriales.</p>
-                    <p>Mi filosofía es que el maquillaje no debe enmascarar quién eres, sino celebrar tu esencia y darte la confianza para brillar en cualquier ocasión.</p>
-                    <a href="#contact" class="btn-outline">Contáctame</a>
+
+                <!-- 2: Medio Empresas -->
+                <div class="accordion-item empresas">
+                    <img class="accordion-bg" src="assets/Lili_hero.png" alt="Ponte Guapa Identidad" loading="lazy">
+                    <div class="accordion-overlay"></div>
+                    <div class="accordion-title-vertical">Ponte Guapa: Identidad Ejecutiva</div>
+                    <div class="accordion-content">
+                        <span class="curso-tag">Ejecutivo</span>
+                        <h3>Ponte Guapa: Identidad Ejecutiva</h3>
+                        <p>Protocolo, vestimenta ejecutiva y automaquillaje para juntas de negocios.</p>
+                        <a href="detalles-curso.html?type=ponteguapa_medio_empresas"
+                            class="btn-curso btn-curso-gold">Ver Más</a>
+                    </div>
+                </div>
+
+                <!-- 3: Avanzado Empresas -->
+                <div class="accordion-item empresas">
+                    <img class="accordion-bg" src="assets/social-5.png" alt="Ponte Guapa Alta Dirección" loading="lazy">
+                    <div class="accordion-overlay"></div>
+                    <div class="accordion-title-vertical">Ponte Guapa: Alta Dirección</div>
+                    <div class="accordion-content">
+                        <span class="curso-tag">Alta Gerencia</span>
+                        <h3>Ponte Guapa: Alta Dirección</h3>
+                        <p>Liderazgo, marca personal ejecutiva de alto impacto y estilismo de gala.</p>
+                        <a href="detalles-curso.html?type=ponteguapa_avanzado_empresas"
+                            class="btn-curso btn-curso-outline">Ver Más</a>
+                    </div>
+                </div>
+
+                <!-- 4: Asesoría Corporativa -->
+                <div class="accordion-item empresas">
+                    <img class="accordion-bg" src="assets/novia-exterior.jpeg" alt="Asesoría Corporativa"
+                        loading="lazy">
+                    <div class="accordion-overlay"></div>
+                    <div class="accordion-title-vertical">Asesoría Corporativa</div>
+                    <div class="accordion-content">
+                        <span class="curso-tag">Asesoría 100%</span>
+                        <h3>Asesoría Corporativa</h3>
+                        <p>Diseño de código de vestimenta, identidad visual y presencia ejecutiva integral para tu
+                            empresa.</p>
+                        <a href="detalles-curso.html?type=asesoria_corporativa" class="btn-curso btn-curso-gold">Ver
+                            Más</a>
+                    </div>
+                </div>
+
+                <!-- 5: Básico Personas -->
+                <div class="accordion-item personas">
+                    <img class="accordion-bg" src="assets/novia-social.png" alt="Automaquillaje Esenciales" loading="lazy">
+                    <div class="accordion-overlay"></div>
+                    <div class="accordion-title-vertical">Automaquillaje: Esenciales</div>
+                    <div class="accordion-content">
+                        <span class="curso-tag">Amor Propio</span>
+                        <h3>Automaquillaje: Esenciales</h3>
+                        <p>Fundamentos del cuidado de la piel y automaquillaje natural para tu rutina diaria.</p>
+                        <a href="detalles-curso.html?type=ponteguapa_basico_personas"
+                            class="btn-curso btn-curso-outline">Ver Más</a>
+                    </div>
+                </div>
+
+                <!-- 6: Medio Personas -->
+                <div class="accordion-item personas">
+                    <img class="accordion-bg" src="assets/socialcursos.png" alt="Automaquillaje Perfeccionamiento" loading="lazy">
+                    <div class="accordion-overlay"></div>
+                    <div class="accordion-title-vertical">Automaquillaje: Perfeccionamiento</div>
+                    <div class="accordion-content">
+                        <span class="curso-tag">Transformación</span>
+                        <h3>Automaquillaje: Perfeccionamiento</h3>
+                        <p>Domina tus colores y diseña tu clóset cápsula con un maquillaje impecable para cada ocasión.
+                        </p>
+                        <a href="detalles-curso.html?type=ponteguapa_medio_personas"
+                            class="btn-curso btn-curso-gold">Ver Más</a>
+                    </div>
+                </div>
+
+                <!-- 7: Avanzado Personas -->
+                <div class="accordion-item personas">
+                    <img class="accordion-bg" src="assets/social-2.jpeg" alt="Automaquillaje Maestría Glam"
+                        loading="lazy">
+                    <div class="accordion-overlay"></div>
+                    <div class="accordion-title-vertical">Automaquillaje: Maestría Glam</div>
+                    <div class="accordion-content">
+                        <span class="curso-tag">Eventos</span>
+                        <h3>Automaquillaje: Maestría Glam</h3>
+                        <p>Contornos, morfología (visagismo) y automaquillaje glam premium para eventos de noche.</p>
+                        <a href="detalles-curso.html?type=ponteguapa_avanzado_personas"
+                            class="btn-curso btn-curso-outline">Ver Más</a>
+                    </div>
+                </div>
+
+                <!-- 8: Asesoría Personal -->
+                <div class="accordion-item personas">
+                    <img class="accordion-bg" src="assets/socialllll.png" alt="Asesoría de Imagen" loading="lazy">
+                    <div class="accordion-overlay"></div>
+                    <div class="accordion-title-vertical">Asesoría de Imagen</div>
+                    <div class="accordion-content">
+                        <span class="curso-tag">Asesoría 100%</span>
+                        <h3>Asesoría de Imagen Personal</h3>
+                        <p>Auditoría de clóset, personal shopper y rediseño completo de tu estilo personal para
+                            potenciar tu seguridad.</p>
+                        <a href="detalles-curso.html?type=asesoria_personal" class="btn-curso btn-curso-gold">Ver
+                            Más</a>
+                    </div>
+                </div>
+
+                <!-- 9: Novia Glam -->
+                <div class="accordion-item profesionales">
+                    <img class="accordion-bg" src="assets/novia2-2.jpeg" alt="Novia Glam" loading="lazy">
+                    <div class="accordion-overlay"></div>
+                    <div class="accordion-title-vertical">Novia Glam</div>
+                    <div class="accordion-content">
+                        <span class="curso-tag">Especialización</span>
+                        <h3>Novia Glam</h3>
+                        <p>Especialización bridal intensiva: domina técnicas de larga duración, blindaje y maquillajes
+                            de lujo.</p>
+                        <a href="detalles-curso.html?type=novias_glam" class="btn-curso btn-curso-gold">Ver Más</a>
+                    </div>
+                </div>
+
+                <!-- 10: Actualización Social -->
+                <div class="accordion-item profesionales">
+                    <img class="accordion-bg" src="assets/social-3.png" alt="Actualización Social" loading="lazy">
+                    <div class="accordion-overlay"></div>
+                    <div class="accordion-title-vertical">Actualización Social</div>
+                    <div class="accordion-content">
+                        <span class="curso-tag">Especialización</span>
+                        <h3>Actualización Social</h3>
+                        <p>Perfecciona tus técnicas con las tendencias globales para eventos sociales, fotografía y
+                            pieles perfectas.</p>
+                        <a href="detalles-curso.html?type=actualizacion_social" class="btn-curso btn-curso-outline">Ver
+                            Más</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section-contact-new">
+    <section id="contact" class="section-contact-new" style="background-color: #ffffff;">
         <div class="container">
             <div class="contact-header-new">
-                <p>¿Tienes preguntas? Es posible que tengamos la respuesta en nuestra sección de preguntas frecuentes — ¡Echa un vistazo <a href="#">aquí</a>!</p>
-                <h2>CONTÁCTANOS A TRAVÉS DEL FORMULARIO</h2>
+                <p>¿Tienes dudas? Revisa nuestras <a href="#">preguntas frecuentes</a> o escríbeme directamente.</p>
+                <h2>Hablemos de <span class="accent-title">tu estilo</span></h2>
             </div>
             <div class="contact-wrapper-new">
                 <div class="contact-info-new">
@@ -248,13 +432,14 @@
                         </div>
                     </div>
                 </div>
-                
-                <form class="contact-form-new" id="contact-form" action="https://formsubmit.co/juanavjf2002@gmail.com" method="POST">
+
+                <form class="contact-form-new" id="contact-form" action="https://formsubmit.co/juanavjf2002@gmail.com"
+                    method="POST">
                     <!-- Configuración de FormSubmit -->
                     <input type="hidden" name="_subject" value="Nuevo mensaje de contacto desde Lili Makeup!">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
-                    
+
                     <div class="form-group-new">
                         <input type="text" name="Nombre" id="wa-name" placeholder="NOMBRE" required>
                     </div>
@@ -283,13 +468,14 @@
             <div class="footer-main">
                 <div class="footer-col subscribe-col">
                     <h3>MANTENTE AL DÍA</h3>
-                    <p>Suscríbete a nuestro boletín para recibir las últimas novedades, consejos y ofertas exclusivas.</p>
+                    <p>Suscríbete a nuestro boletín para recibir las últimas novedades, consejos y ofertas exclusivas.
+                    </p>
                     <form class="subscribe-form" onsubmit="event.preventDefault();">
                         <input type="email" placeholder="EMAIL" required>
-                        <button type="submit" class="btn-submit-new" style="margin-top: 1rem; width: max-content;">SUSCRIBIRSE</button>
+                        <button type="submit" class="btn-submit-new">SUSCRIBIRSE</button>
                     </form>
                 </div>
-                
+
                 <div class="footer-col logo-col">
                     <a href="#" class="footer-logo">
                         <img src="assets/logo_lili.png" alt="Lili Logo">
@@ -301,19 +487,19 @@
                         <a href="#">IN</a>
                     </div>
                 </div>
-                
+
                 <div class="footer-col nav-col">
                     <h3>NAVEGAR</h3>
                     <div class="footer-nav-links">
                         <ul>
                             <li><a href="#hero">INICIO</a></li>
+                            <li><a href="#about">SOBRE MÍ</a></li>
                             <li><a href="#services">SERVICIOS</a></li>
-                            <li><a href="#cursos">CURSOS</a></li>
                         </ul>
                         <ul>
+                            <li><a href="#portfolio">PORTAFOLIO</a></li>
+                            <li><a href="#cursos">CURSOS</a></li>
                             <li><a href="#contact">CONTACTO</a></li>
-                            <li><a href="#about">SOBRE MÍ</a></li>
-                            <li><a href="#">PRIVACIDAD</a></li>
                         </ul>
                     </div>
                 </div>
@@ -324,13 +510,13 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
         <img src="./assets/whatsapp.png" alt="WhatsApp">
     </a>
-    <div id="google_translate_element" style="display:none;"></div>
+    <div id="google_translate_element"></div>
     <script type="text/javascript">
         // Destruir por completo la barra superior de Google Translate
         const observer = new MutationObserver(() => {
@@ -352,10 +538,10 @@
         });
         observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
 
-        window.googleTranslateElementInit = function() {
-            new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'en,es', autoDisplay: false}, 'google_translate_element');
+        window.googleTranslateElementInit = function () {
+            new google.translate.TranslateElement({ pageLanguage: 'es', includedLanguages: 'en,es', autoDisplay: false }, 'google_translate_element');
         }
-        window.changeLang = function(lang) {
+        window.changeLang = function (lang) {
             var select = document.querySelector(".goog-te-combo");
             if (select) {
                 select.value = lang;
@@ -363,6 +549,8 @@
             }
         }
     </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
 </body>
+
 </html>
