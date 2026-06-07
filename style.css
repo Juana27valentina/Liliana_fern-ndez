@@ -536,7 +536,7 @@ img {
 @media screen and (max-width: 768px) {
     .cursos-accordion {
         flex-direction: column;
-        height: 700px; /* Tall vertical accordion */
+        height: 1100px; /* Tall vertical accordion para dar espacio a los 10 cursos */
     }
 }
 
@@ -562,7 +562,7 @@ img {
 }
 @media screen and (max-width: 768px) {
     .accordion-item.active {
-        flex: 5;
+        flex: 8;
     }
 }
 
@@ -622,9 +622,28 @@ img {
 }
 @media screen and (max-width: 768px) {
     .accordion-title-vertical {
+        writing-mode: horizontal-tb;
         bottom: 50%;
         left: 20px;
         transform: translateY(50%); /* horizontal text on mobile collapsed */
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+    
+    .accordion-content {
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+    }
+    
+    .accordion-content h3 {
+        font-size: 1.6rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .accordion-content p {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
     }
 }
 
@@ -1536,6 +1555,10 @@ img {
 }
 
 @media screen and (max-width: 768px) {
+    .about-img {
+        display: none !important;
+    }
+
     .nav-links {
         position: fixed;
         left: 0;
