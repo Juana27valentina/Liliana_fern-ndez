@@ -200,7 +200,12 @@
             return (
                 <section className="relative h-screen flex items-center justify-center overflow-hidden">
                     <div className="absolute inset-0 z-0 bg-nude-900">
-                        <img src={data.heroImage || "assets/novios.jpeg"} alt="Hero Background" className="w-full h-full object-cover object-center opacity-80" />
+                        <img 
+                            src={data.heroImage || "assets/novios.jpeg"} 
+                            alt="Hero Background" 
+                            className="w-full h-full object-cover opacity-80"
+                            style={{ objectPosition: data.imagePosition || 'center center' }}
+                        />
                         <div className="absolute inset-0 bg-black/30"></div>
                         <div className="absolute inset-0 bg-gradient-to-b from-nude-900/30 via-transparent to-nude-50"></div>
                     </div>
@@ -335,7 +340,76 @@
             );
         };
 
+        const SocialCustomLayout = ({ data }) => {
+            return (
+                <section className="py-24 px-6 relative bg-nude-100 overflow-hidden">
+                    {/* Background Glows */}
+                    <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
+                        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-nude-200 blur-3xl"></div>
+                        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-champagne blur-3xl"></div>
+                    </div>
+                    
+                    <div className="max-w-[1000px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+                        
+                        {/* Tarjeta Estudio */}
+                        <div className="bg-white p-8 md:p-10 shadow-lg relative group overflow-hidden border border-nude-200 transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-champagne rounded-full mix-blend-multiply filter blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            
+                            <div className="relative z-10 text-center mb-8">
+                                <span className="inline-block text-xs font-poppins uppercase tracking-[0.2em] text-gold font-semibold mb-3 border-b border-gold/30 pb-1">Atención Personalizada</span>
+                                <h3 className="font-playfair text-3xl text-nude-900">En Nuestro Estudio</h3>
+                            </div>
+                            
+                            <div className="relative z-10 w-full space-y-6 text-left">
+                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
+                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Maquillaje Y Peinado</span>
+                                    <span className="font-playfair italic text-2xl text-nude-900">$250.000</span>
+                                </div>
+                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
+                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Solo Peinado</span>
+                                    <span className="font-playfair italic text-2xl text-nude-900">$140.000</span>
+                                </div>
+                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
+                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Solo Maquillaje</span>
+                                    <span className="font-playfair italic text-2xl text-nude-900">$150.000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Tarjeta Domicilio */}
+                        <div className="bg-white p-8 md:p-10 shadow-lg relative group overflow-hidden border border-nude-200 transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-champagne rounded-full mix-blend-multiply filter blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            
+                            <div className="relative z-10 text-center mb-8">
+                                <span className="inline-block text-xs font-poppins uppercase tracking-[0.2em] text-gold font-semibold mb-3 border-b border-gold/30 pb-1">Comodidad y Exclusividad</span>
+                                <h3 className="font-playfair text-3xl text-nude-900">Servicios Domicilio</h3>
+                            </div>
+                            
+                            <div className="relative z-10 w-full space-y-6 text-left">
+                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
+                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Maquillaje Y Peinado</span>
+                                    <span className="font-playfair italic text-2xl text-nude-900">$300.000</span>
+                                </div>
+                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
+                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Solo Peinado</span>
+                                    <span className="font-playfair italic text-2xl text-nude-900">$190.000</span>
+                                </div>
+                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
+                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Solo Maquillaje</span>
+                                    <span className="font-playfair italic text-2xl text-nude-900">$195.000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            );
+        };
+
         const Packages = ({ data }) => {
+            if (data.isCustomLayout) {
+                return <SocialCustomLayout data={data} />;
+            }
             const pkgs = data.packages;
 
             return (
@@ -469,7 +543,7 @@
 
         const WhatsAppBtn = () => {
             return (
-                <a href="https://wa.me/573113178349" className="whatsapp-float" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/573113178349?text=Hola!%20Me%20encantar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20tus%20servicios." className="whatsapp-float" target="_blank" rel="noopener noreferrer">
                     <img src="./assets/whatsapp.png" alt="WhatsApp" />
                 </a>
             );
@@ -540,61 +614,24 @@
             social: {
                 heroTitle: "Atelier Social",
                 heroSubtitle: "Resalta tu belleza en tus eventos más especiales.",
-                heroImage: "assets/social.png",
+                heroImage: "assets/socialllll.png",
+                imagePosition: "center 20%",
                 introTitle: "Atelier Social Collection",
                 introDesc1: "Diseñado para hacerte brillar en tus eventos, graduaciones, galas y momentos inolvidables.",
                 introDesc2: "Un maquillaje y peinado que resalta tus mejores facciones, garantizando una duración impecable y un look sofisticado toda la noche.",
-                packages: [
-                    {
-                        title: "SOCIAL GLAM",
-                        subtitle: "La esencia",
-                        desc: "Look impecable para eventos de día o tarde. Resalta tu belleza natural con elegancia.",
-                        price: "$150.000",
-                        includes: [
-                            { main: "Preparación de piel básica" },
-                            { main: "Maquillaje HD" },
-                            { main: "Pestañas postizas clásicas" }
-                        ]
-                    },
-                    {
-                        title: "SOCIAL ELEGANCE",
-                        subtitle: "El impacto",
-                        desc: "Look completo para galas y eventos de noche con máxima duración.",
-                        price: "$250.000",
-                        featured: true,
-                        includes: [
-                            { main: "Preparación de piel avanzada" },
-                            { main: "Maquillaje HD a prueba de agua" },
-                            { main: "Pestañas postizas premium" },
-                            { main: "Kit de retoque básico" }
-                        ]
-                    },
-                    {
-                        title: "SOCIAL VIP",
-                        subtitle: "La exclusividad",
-                        desc: "Asesoría y look premium para quienes desean una experiencia de lujo.",
-                        price: "$400.000",
-                        includes: [
-                            { main: "Asesoría de imagen previa" },
-                            { main: "Preparación de piel VIP con mascarillas" },
-                            { main: "Maquillaje HD a prueba de agua" },
-                            { main: "Pestañas de mink (reutilizables)" },
-                            { main: "Kit de retoque de lujo" }
-                        ]
-                    }
-                ],
+                isCustomLayout: true,
+                customImage: "assets/social-produccion.jpeg",
+                packages: [],
                 showComplementary: false,
                 infoList: [
-                    "El servicio SOCIAL VIP incluye atención a domicilio dentro de Medellín.",
-                    "Las experiencias SOCIAL GLAM y SOCIAL ELEGANCE incluyen atención en estudio.",
-                    "En caso de requerir desplazamiento, se adicionará un valor de domicilio según ubicación.",
+                    "El servicio a domicilio aplica restricciones de cobertura dentro de Medellín.",
                     "Para grupos mayores a 3 personas, contamos con atención especial y equipo de trabajo."
                 ]
             },
             '15': {
                 heroTitle: "Atelier 15 Años",
                 heroSubtitle: "Tu sueño hecho realidad.",
-                heroImage: "assets/Quince años-El momento de renacer..png",
+                heroImage: "assets/152.jpeg",
                 introTitle: "Atelier 15 Años Collection",
                 introDesc1: "Un acompañamiento mágico para lucir radiante y fresca en el día más soñado.",
                 introDesc2: "Diseñamos un look juvenil y duradero que destaque tu personalidad para que brilles en cada momento de tu celebración.",
