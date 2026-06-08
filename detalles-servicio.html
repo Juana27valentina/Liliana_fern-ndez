@@ -331,7 +331,7 @@
                             <span className="font-playfair text-2xl md:text-3xl text-nude-900 font-medium">{price}</span>
                         </div>
                         <a href={`https://wa.me/573113178349?text=Hola,%20me%20interesa%20la%20experiencia%20${encodeURIComponent(title)}`} target="_blank" rel="noreferrer" 
-                           className={`block w-full py-3.5 px-6 rounded-[30px] uppercase text-[11px] tracking-widest font-semibold transition-all duration-300 ${featured ? 'bg-[#D6AD99] text-white hover:bg-[#b88a73] shadow-md hover:shadow-lg' : 'bg-transparent text-nude-900 border-[1.5px] border-nude-900 hover:bg-nude-900 hover:text-white'}`} 
+                           className={`inline-block py-2.5 px-8 rounded-[30px] uppercase text-[10px] tracking-widest font-semibold transition-all duration-300 ${featured ? 'bg-[#D6AD99] text-white hover:bg-[#b88a73] shadow-md hover:shadow-lg' : 'bg-transparent text-nude-900 border-[1.5px] border-nude-900 hover:bg-nude-900 hover:text-white'}`} 
                            style={{ fontFamily: 'var(--font-text)' }}>
                             Reservar Experiencia
                         </a>
@@ -352,52 +352,98 @@
                     <div className="max-w-[1000px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
                         
                         {/* Tarjeta Estudio */}
-                        <div className="bg-white p-8 md:p-10 shadow-lg relative group overflow-hidden border border-nude-200 transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-champagne rounded-full mix-blend-multiply filter blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            
-                            <div className="relative z-10 text-center mb-8">
-                                <span className="inline-block text-xs font-poppins uppercase tracking-[0.2em] text-gold font-semibold mb-3 border-b border-gold/30 pb-1">Atención Personalizada</span>
-                                <h3 className="font-playfair text-3xl text-nude-900">En Nuestro Estudio</h3>
+                        <div className="relative p-6 md:p-8 bg-white shadow-lg rounded-2xl group hover:-translate-y-2 transition-transform duration-500 flex flex-col justify-between h-full border border-gold/10">
+                            {/* Decorative corner borders */}
+                            <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-gold rounded-tl-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-gold rounded-tr-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-gold rounded-bl-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-gold rounded-br-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                            <div className="text-center mb-6">
+                                <h3 className="font-playfair text-xl md:text-2xl text-nude-900 mb-1 uppercase tracking-wider">Atención Personalizada</h3>
+                                <h4 className="font-playfair italic text-gold text-lg mb-3">“ En Nuestro Estudio ”</h4>
+                                <p className="font-poppins text-sm text-nude-700 font-light leading-relaxed">Servicios disponibles en nuestro espacio diseñado para tu comodidad y relajación.</p>
                             </div>
                             
-                            <div className="relative z-10 w-full space-y-6 text-left">
-                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
-                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Maquillaje Y Peinado</span>
-                                    <span className="font-playfair italic text-2xl text-nude-900">$250.000</span>
-                                </div>
-                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
-                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Solo Peinado</span>
-                                    <span className="font-playfair italic text-2xl text-nude-900">$140.000</span>
-                                </div>
-                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
-                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Solo Maquillaje</span>
-                                    <span className="font-playfair italic text-2xl text-nude-900">$150.000</span>
-                                </div>
+                            <div className="mb-6 flex-grow">
+                                <h5 className="font-poppins text-[10px] uppercase tracking-[0.15em] text-nude-900 font-bold mb-4 text-center border-b border-nude-200 pb-2">Servicios</h5>
+                                <ul className="space-y-4 text-left">
+                                    <li className="flex justify-between items-center">
+                                        <div className="flex items-center">
+                                            <span className="text-gold mr-2.5 mt-0.5 flex-shrink-0 text-[9px]">✦</span>
+                                            <span className="font-poppins text-[12px] text-nude-900 font-medium">Maquillaje Y Peinado</span>
+                                        </div>
+                                        <span className="font-playfair italic text-lg text-nude-900">$250.000</span>
+                                    </li>
+                                    <li className="flex justify-between items-center">
+                                        <div className="flex items-center">
+                                            <span className="text-gold mr-2.5 mt-0.5 flex-shrink-0 text-[9px]">✦</span>
+                                            <span className="font-poppins text-[12px] text-nude-900 font-medium">Solo Peinado</span>
+                                        </div>
+                                        <span className="font-playfair italic text-lg text-nude-900">$140.000</span>
+                                    </li>
+                                    <li className="flex justify-between items-center">
+                                        <div className="flex items-center">
+                                            <span className="text-gold mr-2.5 mt-0.5 flex-shrink-0 text-[9px]">✦</span>
+                                            <span className="font-poppins text-[12px] text-nude-900 font-medium">Solo Maquillaje</span>
+                                        </div>
+                                        <span className="font-playfair italic text-lg text-nude-900">$150.000</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div className="text-center mt-auto pt-6 border-t border-nude-100/50">
+                                <a href="#contact" className="inline-block py-2.5 px-8 rounded-[30px] uppercase text-[10px] tracking-widest font-semibold transition-all duration-300 bg-transparent text-nude-900 border-[1.5px] border-nude-900 hover:bg-nude-900 hover:text-white" style={{ fontFamily: 'var(--font-text)' }}>
+                                    Reservar Experiencia
+                                </a>
                             </div>
                         </div>
 
                         {/* Tarjeta Domicilio */}
-                        <div className="bg-white p-8 md:p-10 shadow-lg relative group overflow-hidden border border-nude-200 transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-champagne rounded-full mix-blend-multiply filter blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            
-                            <div className="relative z-10 text-center mb-8">
-                                <span className="inline-block text-xs font-poppins uppercase tracking-[0.2em] text-gold font-semibold mb-3 border-b border-gold/30 pb-1">Comodidad y Exclusividad</span>
-                                <h3 className="font-playfair text-3xl text-nude-900">Servicios Domicilio</h3>
+                        <div className="relative p-6 md:p-8 bg-white shadow-2xl rounded-2xl group hover:-translate-y-2 transition-transform duration-500 flex flex-col justify-between h-full border border-gold/10">
+                            {/* Decorative corner borders */}
+                            <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-gold rounded-tl-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-gold rounded-tr-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-gold rounded-bl-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-gold rounded-br-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                            <div className="text-center mb-6">
+                                <h3 className="font-playfair text-xl md:text-2xl text-nude-900 mb-1 uppercase tracking-wider">Comodidad y Exclusividad</h3>
+                                <h4 className="font-playfair italic text-gold text-lg mb-3">“ Servicios Domicilio ”</h4>
+                                <p className="font-poppins text-sm text-nude-700 font-light leading-relaxed">Nos desplazamos hasta ti para que disfrutes la experiencia desde la comodidad de tu hogar.</p>
                             </div>
                             
-                            <div className="relative z-10 w-full space-y-6 text-left">
-                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
-                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Maquillaje Y Peinado</span>
-                                    <span className="font-playfair italic text-2xl text-nude-900">$300.000</span>
-                                </div>
-                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
-                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Solo Peinado</span>
-                                    <span className="font-playfair italic text-2xl text-nude-900">$190.000</span>
-                                </div>
-                                <div className="flex justify-between items-center border-b border-nude-100 pb-4">
-                                    <span className="font-poppins text-xs uppercase tracking-widest text-nude-700 font-semibold">Solo Maquillaje</span>
-                                    <span className="font-playfair italic text-2xl text-nude-900">$195.000</span>
-                                </div>
+                            <div className="mb-6 flex-grow">
+                                <h5 className="font-poppins text-[10px] uppercase tracking-[0.15em] text-nude-900 font-bold mb-4 text-center border-b border-nude-200 pb-2">Servicios</h5>
+                                <ul className="space-y-4 text-left">
+                                    <li className="flex justify-between items-center">
+                                        <div className="flex items-center">
+                                            <span className="text-gold mr-2.5 mt-0.5 flex-shrink-0 text-[9px]">✦</span>
+                                            <span className="font-poppins text-[12px] text-nude-900 font-medium">Maquillaje Y Peinado</span>
+                                        </div>
+                                        <span className="font-playfair italic text-lg text-nude-900">$300.000</span>
+                                    </li>
+                                    <li className="flex justify-between items-center">
+                                        <div className="flex items-center">
+                                            <span className="text-gold mr-2.5 mt-0.5 flex-shrink-0 text-[9px]">✦</span>
+                                            <span className="font-poppins text-[12px] text-nude-900 font-medium">Solo Peinado</span>
+                                        </div>
+                                        <span className="font-playfair italic text-lg text-nude-900">$190.000</span>
+                                    </li>
+                                    <li className="flex justify-between items-center">
+                                        <div className="flex items-center">
+                                            <span className="text-gold mr-2.5 mt-0.5 flex-shrink-0 text-[9px]">✦</span>
+                                            <span className="font-poppins text-[12px] text-nude-900 font-medium">Solo Maquillaje</span>
+                                        </div>
+                                        <span className="font-playfair italic text-lg text-nude-900">$195.000</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div className="text-center mt-auto pt-6 border-t border-nude-100/50">
+                                <a href="#contact" className="inline-block py-2.5 px-8 rounded-[30px] uppercase text-[10px] tracking-widest font-semibold transition-all duration-300 bg-[#D6AD99] text-white hover:bg-[#b88a73] shadow-md hover:shadow-lg" style={{ fontFamily: 'var(--font-text)' }}>
+                                    Reservar Experiencia
+                                </a>
                             </div>
                         </div>
 
